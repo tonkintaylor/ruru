@@ -31,7 +31,7 @@ repos:
         entry: uv lock --offline
         files: ^(uv\.lock|pyproject\.toml|uv\.toml)$
         additional_dependencies:
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         always_run: true
         pass_filenames: false
@@ -40,7 +40,7 @@ repos:
         entry: uv sync --no-active --offline
         args: [--locked]
         additional_dependencies:
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         always_run: true
         pass_filenames: false
@@ -52,11 +52,15 @@ repos:
         entry: uv export --frozen --offline --quiet --no-default-groups 
             -o="requirements.txt"
         additional_dependencies:
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         pass_filenames: false
         require_serial: true
 
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: v2.6.0
+    hooks:
+      - id: pyproject-fmt
   - repo: https://github.com/python-formate/flake8-dunder-all
     rev: v0.4.1
     hooks:
@@ -72,7 +76,7 @@ repos:
         entry: uv run --frozen --offline ruff format --force-exclude
         types_or: [python, pyi, jupyter]
         additional_dependencies:
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         pass_filenames: false
       - id: ruff-check
@@ -82,7 +86,7 @@ repos:
             --ignore "FIX"
         types_or: [python, pyi, jupyter]
         additional_dependencies:
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         pass_filenames: false
 
@@ -103,7 +107,7 @@ repos:
         entry: uv run --frozen --offline python -m setuptools_scm -c
         additional_dependencies:
           - setuptools_scm
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         files: ^pyproject.toml$
 
@@ -113,7 +117,7 @@ repos:
         name: nbstripout
         entry: uv run --frozen --offline nbstripout
         additional_dependencies:
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         files: .*\.(ipynb)$
         exclude: .*\.(example|template|keepoutput|)\.ipynb$
@@ -124,10 +128,16 @@ repos:
         name: deptry
         entry: uv run --frozen --offline deptry src
         additional_dependencies:
-          - uv==0.7.13
+          - uv==0.8.3
         language: python
         always_run: true
         pass_filenames: false
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        additional_dependencies:
+          - tomli
 default_install_hook_types:
   - pre-commit
   - pre-push
