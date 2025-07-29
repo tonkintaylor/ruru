@@ -1,0 +1,2 @@
+#!/bin/bash
+source ./tasks/scripts/tag_release.sh

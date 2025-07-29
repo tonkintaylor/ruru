@@ -205,3 +205,34 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Profiling output
+*.prof
+
+# Black formatter temp files
+*.py.*.tmp
+
+# Draw.io temp files
+~drawio~*~*.drawio.tmp
+
+# VS Code config
+.vscode/
+!.vscode/settings.template.json
+
+# Windows thumbnail cache files
+Thumbs.db
+
+# Project Configuration file
+.config.yaml
+
+# Cached datasets
+.datasetcache
+
+# Microsoft Office lock files
+~$*.xlsx
+
+# Automatically generated setuptools_scm version file
+src/**/_version.py
+
+# Automatically generated Sphinx API documentation
+doc/source/_apidoc/
