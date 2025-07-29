@@ -81,7 +81,7 @@ def get(
     return merged_config.get(value)
 
 
-def find_config_file(file: str, *, use_parent: bool) -> Path:
+def find_config_file(file: str | Path, *, use_parent: bool) -> Path:
     """Find the specified configuration file in the current or parent directories.
 
     This function searches for the specified configuration file in the current
