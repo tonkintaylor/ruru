@@ -1,2 +1,0 @@
-#!/bin/bash
-source ./tasks/scripts/run_towncrier_build.sh
