@@ -102,17 +102,6 @@ repos:
 
   - repo: local
     hooks:
-      - id: setuptools_scm
-        name: setuptools_scm
-        entry: uv run --frozen --offline python -m setuptools_scm -c
-        additional_dependencies:
-          - setuptools_scm
-          - uv==0.8.3
-        language: python
-        files: ^pyproject.toml$
-
-  - repo: local
-    hooks:
       - id: nbstripout
         name: nbstripout
         entry: uv run --frozen --offline nbstripout
