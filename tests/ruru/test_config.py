@@ -1,4 +1,5 @@
 import os
+from collections.abc import Generator
 from pathlib import Path
 
 import pytest
@@ -14,7 +15,7 @@ CONFIG_FILE = "config.yml"
 
 
 @pytest.fixture
-def config_fixture(tmp_path: Path):
+def config_fixture_path(tmp_path: Path) -> Generator[Path]:
     temp_config_path = tmp_path / CONFIG_FILE
     yield temp_config_path
     if "CONFIG_ACTIVE" in os.environ:
@@ -22,53 +23,51 @@ def config_fixture(tmp_path: Path):
 
 
 class TestGet:
-    def test_existing_value(self, config_fixture):
+    def test_existing_value(self, config_fixture_path: Path):
         os.environ["CONFIG_ACTIVE"] = "default"
-        config_fixture.write_text("""
+        config_fixture_path.write_text("""
         default:
             key1: value1
             key2: value2
         """)
-        assert get("key1", file=config_fixture) == "value1"
+        assert get("key1", file=config_fixture_path) == "value1"
 
-    def test_non_existing_value(self, config_fixture):
-        config_fixture.write_text("""
+    def test_non_existing_value(self, config_fixture_path: Path):
+        config_fixture_path.write_text("""
         default:
             key1: value1
             key2: value2
         """)
-        os.environ["CONFIG_ACTIVE"] = config_fixture.as_posix()
-        assert get("non_existing_key", file=config_fixture) is None
+        assert get("non_existing_key", file=config_fixture_path) is None
 
-    def test_overwriting_value(self, config_fixture):
-        config_fixture.write_text("""
+    def test_overwriting_value(self, config_fixture_path: Path):
+        config_fixture_path.write_text("""
         default:
             key1: value1
             key2: value2
         non-default:
             key2: value3
         """)
-        os.environ["CONFIG_ACTIVE"] = config_fixture.as_posix()
-        assert get("key2", file=config_fixture, config="non-default") == "value3"
+        assert get("key2", file=config_fixture_path, config="non-default") == "value3"
 
-    def test_null_default(self, config_fixture):
+    def test_null_default(self, config_fixture_path: Path):
         os.environ["CONFIG_ACTIVE"] = "non-default"
-        config_fixture.write_text("""
+        config_fixture_path.write_text("""
         default: ~
         non-default:
             key1: value1
             key2: value2
         """)
-        assert get("key1", file=config_fixture) == "value1"
+        assert get("key1", file=config_fixture_path) == "value1"
 
-    def test_missing_default_key(self, config_fixture):
-        config_fixture.write_text("""
+    def test_missing_default_key(self, config_fixture_path: Path):
+        config_fixture_path.write_text("""
         environment:
             key1: value1
             key2: value2
         """)
         with pytest.raises(MissingDefaultConfigError):
-            get(file=config_fixture)
+            get(file=config_fixture_path)
 
 
 class TestFindConfigFile:
