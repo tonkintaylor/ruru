@@ -17,7 +17,7 @@ authors = [
 ]
 license = { file = "LICENSE.txt" }
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dynamic = ["version"]
 dependencies = []
 
@@ -26,7 +26,7 @@ dev = [
     "build>=1.2.2.post1",
     "deptry>=0.23.0",
     "ipykernel>=6.30.0",
-    "ipython>=9.4.0",
+    "ipython>=8.37.0",
     "ipywidgets>=8.1.7",
     "matplotlib>=3.10.3",
     "nbstripout>=0.8.1",
@@ -37,13 +37,16 @@ dev = [
     "ruff>=0.12.5",
     "setuptools-scm[toml]>=8.3.1",
     "tqdm>=4.67.1",
+    "usethis>=0.15.2",
 ]
 test = [
     "coverage[toml]>=7.10.1",
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
 ]
-doc = []
+doc = [
+    "mkdocs>=1.6.1",
+]
 
 [project.scripts]
 # example = "ruru.scripts.example:myfunc"
@@ -210,3 +213,10 @@ exclude_lines = [
   # Don't complain about abstract methods, they aren't run:
   "@(abc\\.)?abstractmethod",
 ]
+
+[tool.pyproject-fmt]
+keep_full_version = true
+
+[tool.codespell]
+ignore-regex = ["[A-Za-z0-9+/]{100,}"]
+ignore-words-list = ["..."]
