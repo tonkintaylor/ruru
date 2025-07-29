@@ -10,3 +10,9 @@
 [![usethis](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/usethis-python/usethis-python/main/assets/badge/v1.json)](https://github.com/usethis-python/usethis-python)
 
 A collection of Python utilities ported from the R ecosystem.
+
+## Features
+
+### `config` module
+
+The `ruru.config` module provides an equivalent utility to the [R `config` package](https://rstudio.github.io/config/articles/introduction.html), allowing for easy management of configuration settings in Python applications via YAML files. You can learn more about the module at <https://github.com/tonkintaylor/ruru/tree/develop/src/ruru/domain> via the docstrings.
