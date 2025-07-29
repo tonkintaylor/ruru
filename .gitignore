@@ -231,7 +231,7 @@ Thumbs.db
 # Microsoft Office lock files
 ~$*.xlsx
 
-# Automatically generated setuptools_scm version file
+# Automatically generated version file
 src/**/_version.py
 
 # Automatically generated Sphinx API documentation
