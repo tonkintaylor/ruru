@@ -28,7 +28,9 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
 ]
 dynamic = [ "version" ]
-dependencies = [  ]
+dependencies = [
+  "pyyaml>=6.0.2",
+]
 
 [dependency-groups]
 dev = [
