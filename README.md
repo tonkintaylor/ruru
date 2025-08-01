@@ -16,3 +16,36 @@ A collection of Python utilities ported from the R ecosystem.
 ### `config` module
 
 The `ruru.config` module provides an equivalent utility to the [R `config` package](https://rstudio.github.io/config/articles/introduction.html), allowing for easy management of configuration settings in Python applications via YAML files. You can learn more about the module at <https://github.com/tonkintaylor/ruru/tree/develop/src/ruru/config.py> via the docstrings.
+
+### `cli` module
+
+The `ruru.cli` module provides a suite of tools to build attractive command line interfaces, inspired by the [R `cli` package](https://cran.r-project.org/web/packages/cli/index.html). It includes:
+
+- **Semantic elements**: headings, alerts, paragraphs, lists, boxes, and rules
+- **Text styling**: bold, italic, underline, dim, and colors
+- **Unicode symbols** with ASCII fallbacks for compatibility
+- **Themes**: CSS-like styling system with predefined themes (default, dark, light, minimal)
+- **Smart terminal detection**: automatically adapts to terminal capabilities
+
+#### Quick Example
+
+```python
+import ruru.cli as cli
+
+# Headings and alerts
+print(cli.heading("Welcome to My App", level=1))
+print(cli.alert("Setup completed successfully!", type="success"))
+print(cli.alert("Please review the configuration", type="warning"))
+
+# Lists and formatting
+items = ["Install dependencies", "Configure settings", "Run tests"]
+print(cli.bullet_list(items))
+
+# Boxes and rules
+print(cli.box("Important: This is a highlighted message"))
+print(cli.rule(width=50))
+
+# Themes
+cli.set_theme("dark")  # Switch to dark theme
+print(cli.alert("Now using dark theme", type="info"))
+```
