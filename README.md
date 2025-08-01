@@ -15,4 +15,12 @@ A collection of Python utilities ported from the R ecosystem.
 
 ### `config` module
 
-The `ruru.config` module provides an equivalent utility to the [R `config` package](https://rstudio.github.io/config/articles/introduction.html), allowing for easy management of configuration settings in Python applications via YAML files. You can learn more about the module at <https://github.com/tonkintaylor/ruru/tree/develop/src/ruru/config.py> via the docstrings.
+The `ruru.config` module provides an equivalent utility to the [R `config` package](https://rstudio.github.io/config/articles/introduction.html), allowing for easy management of configuration settings in Python applications via YAML files.
+
+Inspired by the R [`config`](https://rstudio.github.io/config/) package.
+
+### `cli` module
+
+The `ruru.cli` module provides utilities for enhanced command-line interface output, including colored text, formatted headings, alert messages, and bullet-point lists.
+
+Inspired by the R [`cli`](https://cli.r-lib.org/reference/index.html) package.
