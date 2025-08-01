@@ -121,11 +121,11 @@ class CLI:
         print("\033[1mℹ\033[0m", message)
 
     @staticmethod
-    def bullets(text: str) -> None:
+    def bullets(text: list[str]) -> None:
         """Prints a list of items with bullet points.
 
         Args:
-             text (list): A list of items to be displayed with bullet points.
+             text (list[str]): A list of items to be displayed with bullet points.
 
         Examples:
              >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
