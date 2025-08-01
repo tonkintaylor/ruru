@@ -4,7 +4,7 @@ import sys
 from typing import Literal
 
 from ruru.cli.styles import bold, color, dim
-from ruru.cli.symbols import cross, info, line, tick, warning, bullet
+from ruru.cli.symbols import cross, info, line, tick, warning, bullet, tree_mid, tree_end
 from ruru.cli.themes import get_current_theme
 
 
@@ -234,3 +234,32 @@ def box(content: str, *, width: int | None = None, padding: int = 1) -> str:
     box_lines.append(bottom_border)
     
     return "\n".join(box_lines)
+
+
+def tree(items: list[str], *, indent: int = 2) -> str:
+    """Create a tree structure display.
+    
+    Args:
+        items: List of items to display in tree format.
+        indent: Number of spaces for indentation.
+        
+    Returns:
+        Formatted tree string.
+    """
+    if not items:
+        return ""
+    
+    lines = []
+    indent_str = " " * indent
+    
+    for i, item in enumerate(items):
+        if i == len(items) - 1:
+            # Last item
+            connector = tree_end()
+            lines.append(f"{indent_str}{connector} {item}")
+        else:
+            # Not last item
+            connector = tree_mid()
+            lines.append(f"{indent_str}{connector} {item}")
+    
+    return "\n".join(lines)

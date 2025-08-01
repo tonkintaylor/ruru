@@ -95,6 +95,12 @@ def main():
     cli.set_theme("default")
     print()
     
+    # Tree demo
+    print(cli.heading("🌳 Trees", level=2))
+    tree_items = ["Root", "Branch 1", "Branch 2", "Leaf"]
+    print(cli.tree(tree_items))
+    print()
+    
     # Symbol fallback demo
     print(cli.heading("🔣 Symbol Fallbacks", level=2))
     print("Unicode mode:")

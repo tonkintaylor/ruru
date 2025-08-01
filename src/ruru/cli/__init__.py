@@ -15,6 +15,7 @@ from ruru.cli.elements import (
     numbered_list,
     paragraph,
     rule,
+    tree,
 )
 from ruru.cli.styles import (
     bold,
@@ -37,6 +38,7 @@ __all__ = [
     "numbered_list",
     "paragraph",
     "rule",
+    "tree",
     # Styles
     "bold",
     "dim",

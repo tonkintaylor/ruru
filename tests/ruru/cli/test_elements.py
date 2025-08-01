@@ -8,6 +8,7 @@ from ruru.cli.elements import (
     numbered_list,
     paragraph,
     rule,
+    tree,
 )
 
 
@@ -192,3 +193,27 @@ class TestBox:
         result = box(content, padding=2)
         assert isinstance(result, str)
         assert content in result
+
+
+class TestTree:
+    def test_tree_basic(self):
+        """Test basic tree creation."""
+        items = ["item1", "item2", "item3"]
+        result = tree(items)
+        assert isinstance(result, str)
+        for item in items:
+            assert item in result
+
+    def test_tree_empty(self):
+        """Test tree with empty items."""
+        result = tree([])
+        assert result == ""
+
+    def test_tree_with_indent(self):
+        """Test tree with custom indent."""
+        items = ["item1", "item2"]
+        result = tree(items, indent=4)
+        assert isinstance(result, str)
+        lines = result.split("\n")
+        for line in lines:
+            assert line.startswith("    ")  # 4 spaces
