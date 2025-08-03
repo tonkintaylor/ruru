@@ -26,6 +26,7 @@
 - Do not add exceptions to functions unless explicitly requested.
 - Prefer to type hint strictly with the likes of `Literal["a", "b"]` instead of hinting broader types like `str`. This means the constraints on the input arguments to a function can reside in the type annotation rather than the docstring. Consider @validate_call (from pydantic import validate_call) to avoid boilerplate case-checking in such cases.
 - Refrain from backslash unescaping in raw strings (e.g., `r"\\path"` should be `r"\path"`).
+- When writing scripts, always use "Scripting Style" (Top-Level Code) unless stated otherwise. Write code directly at the module level instead of wrapping in functions or `if __name__ == "__main__":` blocks.
 - For scripts that need to access package files (e.g., templates, data files):
 
   ```python
@@ -70,6 +71,11 @@
 - Avoid importing deprecated types like `typing.Dict` (UP035)
 - Remove unused code instead of commenting it out (ERA001)
 - Never use `from __future__ import annotations` in any file; Python 3.11+ does not require it.
+- Current suppressions:
+#   - src/ruru/cli/elements.py: # ruff: noqa: A002, PLC0415, ANN002, ANN003, F402
+#   - src/ruru/cli/styles.py: # ruff: noqa: ERA001, SIM103
+#   - src/ruru/cli/symbols.py: # ruff: noqa: SIM103
+#   - src/ruru/cli/themes.py: # ruff: noqa: PLW0603
 
 ## Testing
 

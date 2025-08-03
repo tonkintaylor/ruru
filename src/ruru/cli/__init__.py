@@ -29,12 +29,12 @@ from ruru.cli.themes import (
     set_theme,
 )
 
-__all__ = [
+__all__ = [  # noqa: RUF022
     # Elements
     "alert",
     "box",
     "bullet_list",
-    "heading", 
+    "heading",
     "numbered_list",
     "paragraph",
     "rule",
@@ -46,6 +46,6 @@ __all__ = [
     "underline",
     # Themes
     "get_current_theme",
-    "list_themes", 
+    "list_themes",
     "set_theme",
 ]

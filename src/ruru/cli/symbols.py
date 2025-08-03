@@ -1,3 +1,4 @@
+# ruff: noqa: SIM103
 """Unicode symbols with ASCII alternatives for CLI output."""
 
 import os
@@ -10,19 +11,27 @@ def _supports_unicode() -> bool:
     # Check if ASCII_ONLY environment variable is set
     if os.getenv("ASCII_ONLY"):
         return False
-    
+
     # Check encoding
     encoding = getattr(sys.stdout, "encoding", "").lower()
     if encoding in ("utf-8", "utf8"):
         return True
-    
+
     # Default to ASCII for safety
     return False
 
 
 SymbolName = Literal[
-    "tick", "cross", "warning", "info", "arrow_right", "bullet", 
-    "line", "corner", "tree_mid", "tree_end"
+    "tick",
+    "cross",
+    "warning",
+    "info",
+    "arrow_right",
+    "bullet",
+    "line",
+    "corner",
+    "tree_mid",
+    "tree_end",
 ]
 
 
@@ -43,22 +52,22 @@ _SYMBOLS = {
 
 def symbol(name: SymbolName) -> str:
     """Get a symbol with Unicode or ASCII alternative based on terminal support.
-    
+
     Args:
         name: Name of the symbol to retrieve.
-        
+
     Returns:
         Unicode symbol if supported, otherwise ASCII alternative.
-        
+
     Raises:
         ValueError: If symbol name is not recognized.
     """
     if name not in _SYMBOLS:
         msg = f"Unknown symbol: {name}"
         raise ValueError(msg)
-    
+
     symbol_def = _SYMBOLS[name]
-    
+
     if _supports_unicode():
         return symbol_def["unicode"]
     return symbol_def["ascii"]

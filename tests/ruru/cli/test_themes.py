@@ -53,25 +53,25 @@ class TestThemeManagement:
     def test_set_theme_by_name(self):
         """Test setting theme by name."""
         original = get_current_theme()
-        
+
         # Set to dark theme
         set_theme("dark")
         current = get_current_theme()
         assert current.name == "dark"
-        
+
         # Reset to original
         set_theme(original)
 
     def test_set_theme_by_object(self):
         """Test setting theme by Theme object."""
         original = get_current_theme()
-        
+
         # Create custom theme
         custom = create_custom_theme("custom", {"heading": "cyan"})
         set_theme(custom)
         current = get_current_theme()
         assert current.name == "custom"
-        
+
         # Reset to original
         set_theme(original)
 

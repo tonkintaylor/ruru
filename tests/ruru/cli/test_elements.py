@@ -174,7 +174,7 @@ class TestBox:
         result = box(content)
         assert isinstance(result, str)
         assert "line1" in result
-        assert "line2" in result 
+        assert "line2" in result
         assert "line3" in result
 
     def test_box_with_width(self):

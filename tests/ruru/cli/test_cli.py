@@ -29,13 +29,13 @@ class TestCLIImports:
         assert callable(numbered_list)
         assert callable(paragraph)
         assert callable(rule)
-        
+
         # Test styles
         assert callable(bold)
         assert callable(dim)
         assert callable(italic)
         assert callable(underline)
-        
+
         # Test themes
         assert callable(get_current_theme)
         assert callable(list_themes)
@@ -55,7 +55,7 @@ class TestCLIImports:
         assert isinstance(dim("Test"), str)
         assert isinstance(italic("Test"), str)
         assert isinstance(underline("Test"), str)
-        
+
         # Test theme functions
         assert isinstance(get_current_theme().name, str)
         assert isinstance(list_themes(), list)

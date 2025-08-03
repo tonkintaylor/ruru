@@ -1,7 +1,5 @@
 """Tests for CLI styles module."""
 
-import os
-
 from ruru.cli.styles import (
     _supports_color,
     blue,

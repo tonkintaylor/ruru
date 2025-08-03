@@ -1,7 +1,5 @@
 """Tests for CLI symbols module."""
 
-import os
-
 from ruru.cli.symbols import (
     _supports_unicode,
     arrow_right,

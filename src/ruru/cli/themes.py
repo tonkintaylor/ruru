@@ -1,19 +1,19 @@
+# ruff: noqa: PLW0603
 """Theme system for CLI styling with CSS-like configuration."""
 
-from typing import Any, Dict, Literal
+from typing import Any, Literal
 
 from ruru.cli.styles import ColorName, color
-
 
 ThemeName = Literal["default", "dark", "light", "minimal"]
 
 
 class Theme:
     """A theme for CLI styling."""
-    
-    def __init__(self, name: str, colors: Dict[str, ColorName], **kwargs: Any) -> None:
+
+    def __init__(self, name: str, colors: dict[str, ColorName], **kwargs: Any) -> None:
         """Initialize a theme.
-        
+
         Args:
             name: Theme name.
             colors: Color mappings for different element types.
@@ -22,25 +22,25 @@ class Theme:
         self.name = name
         self.colors = colors
         self.config = kwargs
-    
+
     def get_color(self, element_type: str) -> ColorName:
         """Get color for an element type.
-        
+
         Args:
             element_type: Type of element (e.g., 'heading', 'error', 'success').
-            
+
         Returns:
             Color name for the element type.
         """
         return self.colors.get(element_type, "white")
-    
+
     def apply_color(self, text: str, element_type: str) -> str:
         """Apply theme color to text.
-        
+
         Args:
             text: Text to color.
             element_type: Type of element.
-            
+
         Returns:
             Colored text.
         """
@@ -49,18 +49,18 @@ class Theme:
 
 
 # Predefined themes
-_THEMES: Dict[ThemeName, Theme] = {
+_THEMES: dict[ThemeName, Theme] = {
     "default": Theme(
         "default",
         {
             "heading": "bright_white",
-            "subheading": "white", 
+            "subheading": "white",
             "success": "green",
             "error": "red",
             "warning": "yellow",
             "info": "blue",
             "dim": "bright_black",
-        }
+        },
     ),
     "dark": Theme(
         "dark",
@@ -68,11 +68,11 @@ _THEMES: Dict[ThemeName, Theme] = {
             "heading": "bright_cyan",
             "subheading": "cyan",
             "success": "bright_green",
-            "error": "bright_red", 
+            "error": "bright_red",
             "warning": "bright_yellow",
             "info": "bright_blue",
             "dim": "bright_black",
-        }
+        },
     ),
     "light": Theme(
         "light",
@@ -81,10 +81,10 @@ _THEMES: Dict[ThemeName, Theme] = {
             "subheading": "bright_black",
             "success": "green",
             "error": "red",
-            "warning": "yellow", 
+            "warning": "yellow",
             "info": "blue",
             "dim": "bright_black",
-        }
+        },
     ),
     "minimal": Theme(
         "minimal",
@@ -94,9 +94,9 @@ _THEMES: Dict[ThemeName, Theme] = {
             "success": "white",
             "error": "white",
             "warning": "white",
-            "info": "white", 
+            "info": "white",
             "dim": "bright_black",
-        }
+        },
     ),
 }
 
@@ -112,15 +112,15 @@ def get_current_theme() -> Theme:
 
 def set_theme(theme: ThemeName | Theme) -> None:
     """Set the active theme.
-    
+
     Args:
         theme: Theme name or Theme object.
-        
+
     Raises:
         ValueError: If theme name is not recognized.
     """
     global _current_theme
-    
+
     if isinstance(theme, Theme):
         _current_theme = theme
     elif theme in _THEMES:
@@ -137,17 +137,15 @@ def list_themes() -> list[str]:
 
 
 def create_custom_theme(
-    name: str, 
-    colors: Dict[str, ColorName], 
-    **kwargs: Any
+    name: str, colors: dict[str, ColorName], **kwargs: Any
 ) -> Theme:
     """Create a custom theme.
-    
+
     Args:
         name: Theme name.
         colors: Color mappings for element types.
         **kwargs: Additional theme configuration.
-        
+
     Returns:
         New Theme object.
     """

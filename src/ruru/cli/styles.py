@@ -1,3 +1,4 @@
+# ruff: noqa: ERA001, SIM103
 """ANSI color and text styling utilities for CLI output."""
 
 import os
@@ -8,16 +9,16 @@ from typing import Literal
 # ANSI escape codes for text styling
 class _AnsiCodes:
     """ANSI escape codes for text formatting."""
-    
+
     # Reset
     RESET = "\033[0m"
-    
+
     # Text styles
     BOLD = "\033[1m"
     DIM = "\033[2m"
     ITALIC = "\033[3m"
     UNDERLINE = "\033[4m"
-    
+
     # Colors (foreground)
     BLACK = "\033[30m"
     RED = "\033[31m"
@@ -27,7 +28,7 @@ class _AnsiCodes:
     MAGENTA = "\033[35m"
     CYAN = "\033[36m"
     WHITE = "\033[37m"
-    
+
     # Bright colors (foreground)
     BRIGHT_BLACK = "\033[90m"
     BRIGHT_RED = "\033[91m"
@@ -44,20 +45,20 @@ def _supports_color() -> bool:
     # Check if NO_COLOR environment variable is set
     if os.getenv("NO_COLOR"):
         return False
-    
+
     # Check if FORCE_COLOR is set
     if os.getenv("FORCE_COLOR"):
         return True
-    
+
     # Check if output is a TTY
     if not hasattr(sys.stdout, "isatty") or not sys.stdout.isatty():
         return False
-    
+
     # Check TERM environment variable
     term = os.getenv("TERM", "").lower()
     if "color" in term or term in ("xterm", "xterm-256color", "screen", "linux"):
         return True
-    
+
     return False
 
 
@@ -91,9 +92,22 @@ def underline(text: str) -> str:
 
 # Color functions
 ColorName = Literal[
-    "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white",
-    "bright_black", "bright_red", "bright_green", "bright_yellow", 
-    "bright_blue", "bright_magenta", "bright_cyan", "bright_white"
+    "black",
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "magenta",
+    "cyan",
+    "white",
+    "bright_black",
+    "bright_red",
+    "bright_green",
+    "bright_yellow",
+    "bright_blue",
+    "bright_magenta",
+    "bright_cyan",
+    "bright_white",
 ]
 
 
@@ -117,11 +131,11 @@ def color(text: str, color_name: ColorName) -> str:
         "bright_cyan": _AnsiCodes.BRIGHT_CYAN,
         "bright_white": _AnsiCodes.BRIGHT_WHITE,
     }
-    
+
     if color_name not in color_map:
         msg = f"Unknown color: {color_name}"
         raise ValueError(msg)
-    
+
     return _apply_style(text, color_map[color_name])
 
 
