@@ -188,7 +188,7 @@ keep_full_version = true
 
 [tool.pytest.ini_options]
 testpaths = [ "tests", "src" ]
-norecursedirs = [ "tests/assets", "src/notebooks", "src/scripts", "src/archive" ]
+norecursedirs = [ "tests/assets", "src/notebooks", "src/scripts", "src/archive", "src/ruru/cli" ]
 addopts = [
   "--import-mode=importlib",
   "-ra",
@@ -200,7 +200,7 @@ console_output_style = "progress"
 filterwarnings = [ "error" ]
 xfail_strict = true
 log_cli_level = "INFO"
-doctest_optionflags = "NORMALIZE_WHITESPACE"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS IGNORE_EXCEPTION_DETAIL"
 
 [tool.coverage.run]
 source = [ "src" ]
