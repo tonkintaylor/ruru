@@ -20,7 +20,6 @@
 - When adding a new package that requires installation, list it under dependencies in `pyproject.toml`, then run `tasks\dev_sync.ps1`.
 - Limit line length to 100 characters.
 - We are using uv to install packages.
-
 - Never create functions that return more than one output value.
 - Never return tuples; use dictionaries for multiple return values.
 - Do not add exceptions to functions unless explicitly requested.
@@ -45,7 +44,6 @@
 
 - Remove dtype specifications from all `Args:` sections (e.g., `text (str):` → `text:`)
 - Use "Args:" instead of "Parameters:" for consistency
-- Avoid leaving commented-out code in the codebase; instead, include details in docstrings
 
 ## Code Structure & Data Handling
 
