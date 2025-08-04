@@ -236,4 +236,6 @@ src/**/_version.py
 
 # Automatically generated Sphinx API documentation
 doc/source/_apidoc/
+
+# Github
 .github/scratchpad.md
