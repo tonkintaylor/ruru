@@ -15,7 +15,7 @@ class CLI:
         """Prints a level 1 heading.
 
         Args:
-            text (str): The text to be displayed as a heading.
+            text: The text to be displayed as a heading.
 
         Examples:
             >>> CLI.h1("hello")
@@ -34,7 +34,7 @@ class CLI:
         """Prints a level 2 heading.
 
         Args:
-            text (str): The text to be displayed as a heading.
+            text: The text to be displayed as a heading.
 
         Examples:
             >>> CLI.h2("hello world")
@@ -47,7 +47,7 @@ class CLI:
         """Prints a level 3 heading.
 
         Args:
-            text (str): The text to be displayed as a heading.
+            text: The text to be displayed as a heading.
 
         Examples:
             >>> CLI.h3("hello")
@@ -60,7 +60,7 @@ class CLI:
         """Prints a success message in green color.
 
         Args:
-            message (str): The message to be displayed.
+            message: The message to be displayed.
 
         Examples:
             >>> CLI.alert_success("This is a success message.")
@@ -73,7 +73,7 @@ class CLI:
         """Prints a danger message in red color.
 
         Args:
-            message (str): The message to be displayed.
+            message: The message to be displayed.
 
         Examples:
             >>> CLI.alert_danger("Danger! Something went wrong.")
@@ -86,7 +86,7 @@ class CLI:
         """Prints a warning message in yellow color.
 
         Args:
-            message (str): The message to be displayed.
+            message: The message to be displayed.
 
         Examples:
             >>> CLI.alert_warning("Warning: Proceed with caution.")
@@ -99,7 +99,7 @@ class CLI:
         """Prints an information message in blue color.
 
         Args:
-            message (str): The message to be displayed.
+            message: The message to be displayed.
 
         Examples:
             >>> CLI.alert_info("Information: This is important.")
@@ -112,7 +112,7 @@ class CLI:
         """Prints a note message in a default color.
 
         Args:
-            message (str): The message to be displayed.
+            message: The message to be displayed.
 
         Examples:
             >>> CLI.alert_note("This is a note.")
@@ -125,14 +125,14 @@ class CLI:
         """Prints a list of items with bullet points.
 
         Args:
-             text (list[str]): A list of items to be displayed with bullet points.
+            text: A list of items to be displayed with bullet points.
 
         Examples:
-             >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
-             >>> CLI.bullets(bullet_list)
-             • Item 1
-             • Item 2
-             • Item 3
+            >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
+            >>> CLI.bullets(bullet_list)
+            • Item 1
+            • Item 2
+            • Item 3
         """
         for item in text:
             print("  •", item)
@@ -160,9 +160,10 @@ class CLI:
 
 class BColours:
     """A class providing ANSI escape codes for color formatting.
+
     This class provides ANSI escape codes for color formatting. It is used by
     the CLI class to print colored messages.
-    """  # noqa: D205
+    """
 
     HEADER = "\033[95m"
     OKBLUE = "\033[94m"

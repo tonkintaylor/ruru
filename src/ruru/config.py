@@ -102,7 +102,7 @@ def find_config_file(file: str | Path, *, use_parent: bool) -> Path:
     directory and, if not found, optionally continues searching in parent
     directories.
 
-    Parameters:
+    Args:
         file: Name of the configuration file to search for.
         use_parent: True to scan parent directories for the configuration
             file if it's not found in the current directory.

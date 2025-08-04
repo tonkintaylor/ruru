@@ -2,7 +2,7 @@
 
 ## General Guidelines
 
-- We are using Windows for development and Linux for deployment. So, when running commands in terminal, use Windows commands, like ";" instead of "&&" to separate commands.
+- We are using Windows for development and Linux for deployment/CI. When running commands in terminal, use Windows commands for local development (like ";" instead of "&&" to separate commands) and Linux commands when running in CI environments.
 - Every time I ask you to fix linter errors and provide the error messages, update the Linter section in `.github/copilot-instructions.md` accordingly. Use concise, oneliner instruction. Ensure your future responses avoid repeating the same errors.
 - Never create notebooks (ipynb files) unless asked explicitly.
 
@@ -20,7 +20,7 @@
 - When adding a new package that requires installation, list it under dependencies in `pyproject.toml`, then run `tasks\dev_sync.ps1`.
 - Limit line length to 100 characters.
 - We are using uv to install packages.
-- Avoid leaving commented-out code in the codebase; instead, include details in docstrings.
+
 - Never create functions that return more than one output value.
 - Never return tuples; use dictionaries for multiple return values.
 - Do not add exceptions to functions unless explicitly requested.
@@ -40,6 +40,12 @@
   ```
 
   This ensures consistent path resolution in both interactive and script modes.
+
+## Documenting Functions
+
+- Remove dtype specifications from all `Args:` sections (e.g., `text (str):` → `text:`)
+- Use "Args:" instead of "Parameters:" for consistency
+- Avoid leaving commented-out code in the codebase; instead, include details in docstrings
 
 ## Code Structure & Data Handling
 

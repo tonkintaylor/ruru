@@ -5,12 +5,13 @@ permissions:
 on:
   workflow_dispatch:
   push:
-    branches: ['main', 'develop', 'feature/*']
+    branches: ['master', 'develop']
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
       - 'mkdocs.yml'
   pull_request:
+    branches: ['master', 'develop']
     paths-ignore:
       - 'docs/**'
       - '**/*.md'

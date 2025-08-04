@@ -23,20 +23,7 @@ from ruru.cli import CLI
 def test_cli_methods_output(
     capfd: pytest.CaptureFixture[str], method, args, expects_print
 ):
-    """Test the output of a CLI method.
-
-    Args:
-        capfd (pytest fixture): Captures the stdout and stderr output.
-        method (function): The CLI method to test.
-        args (tuple): The arguments to pass to the method.
-        expects_print (bool): Indicates whether the method is expected to print.
-
-    Returns:
-        None
-
-    Raises:
-        AssertionError: If the method does not produce the expected output.
-    """
+    """Test CLI method output."""
     result = method(*args)
     if expects_print:
         out = capfd.readouterr()
@@ -57,21 +44,7 @@ def test_cli_methods_output(
     ],
 )
 def test_cli_color_methods_return_values(method, args):
-    """Test the return values of color methods.
-
-    This function calls the specified `method` with the given `args` and checks if the result is a colored string.
-    If the result is not a colored string, an assertion error is raised.
-
-    Args:
-        method: The color method to test.
-        args: The arguments to pass to the color method.
-
-    Raises:
-        AssertionError: If the method does not return a colored string.
-
-    Returns:
-        None
-    """  # noqa: E501
+    """Test color methods return colored strings."""
     result = method(*args)
     assert result != args[0], (
         "Expected method to return a colored string, but it didn't."

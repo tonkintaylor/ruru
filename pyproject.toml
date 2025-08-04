@@ -194,6 +194,7 @@ addopts = [
   "-ra",
   "--strict-config",
   "--strict-markers",
+  "--doctest-modules",
 ]
 console_output_style = "progress"
 filterwarnings = [ "error" ]
