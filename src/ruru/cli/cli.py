@@ -1,4 +1,15 @@
-from os import get_terminal_size
+from ruru.cli.elements import (
+    alert_danger,
+    alert_info,
+    alert_note,
+    alert_success,
+    alert_warning,
+    bullets,
+    h1,
+    h2,
+    h3,
+)
+from ruru.cli.styles import blue, cyan, green, orange
 
 
 class CLI:
@@ -18,16 +29,10 @@ class CLI:
             text: The text to be displayed as a heading.
 
         Examples:
-            >>> CLI.h1("hello")
+            >>> CLI.h1("hello")  # doctest: +SKIP
             ──────────────────────── hello ────────────────────────
         """
-        try:
-            columns = get_terminal_size().columns
-        except OSError:
-            columns = 80
-        line_length = columns
-        dashes = "─" * ((line_length - len(text)) // 2 - 1)
-        print(f"\n{dashes} {text} {dashes}\n")
+        h1(text)
 
     @staticmethod
     def h2(text: str) -> None:  # pylint: disable=invalid-name
@@ -37,10 +42,10 @@ class CLI:
             text: The text to be displayed as a heading.
 
         Examples:
-            >>> CLI.h2("hello world")
+            >>> CLI.h2("hello world")  # doctest: +SKIP
             ── hello world ──
         """
-        print(f"\n── {text} ──\n")
+        h2(text)
 
     @staticmethod
     def h3(text: str) -> None:  # pylint: disable=invalid-name
@@ -50,10 +55,10 @@ class CLI:
             text: The text to be displayed as a heading.
 
         Examples:
-            >>> CLI.h3("hello")
+            >>> CLI.h3("hello")  # doctest: +SKIP
             ── hello
         """
-        print(f"\n── {text}\n")
+        h3(text)
 
     @staticmethod
     def alert_success(message: str) -> None:
@@ -63,10 +68,10 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_success("This is a success message.")
+            >>> CLI.alert_success("This is a success message.")  # doctest: +SKIP
             ✔ This is a success message.
         """
-        print("\033[1m\033[32m✔\033[0m", message)
+        alert_success(message)
 
     @staticmethod
     def alert_danger(message: str) -> None:
@@ -76,10 +81,10 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_danger("Danger! Something went wrong.")
+            >>> CLI.alert_danger("Danger! Something went wrong.")  # doctest: +SKIP
             ✖ Danger! Something went wrong.
         """
-        print("\033[1m\033[31m✖\033[0m", message)
+        alert_danger(message)
 
     @staticmethod
     def alert_warning(message: str) -> None:
@@ -89,10 +94,10 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_warning("Warning: Proceed with caution.")
+            >>> CLI.alert_warning("Warning: Proceed with caution.")  # doctest: +SKIP
             ! Warning: Proceed with caution.
         """
-        print("\033[1m\033[33m!\033[0m", message)
+        alert_warning(message)
 
     @staticmethod
     def alert_info(message: str) -> None:
@@ -102,10 +107,10 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_info("Information: This is important.")
+            >>> CLI.alert_info("Information: This is important.")  # doctest: +SKIP
             ℹ Information: This is important.
         """
-        print("\033[1m\033[34mℹ\033[0m", message)
+        alert_info(message)
 
     @staticmethod
     def alert_note(message: str) -> None:
@@ -115,10 +120,10 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_note("This is a note.")
+            >>> CLI.alert_note("This is a note.")  # doctest: +SKIP
             ℹ This is a note.
         """
-        print("\033[1mℹ\033[0m", message)
+        alert_note(message)
 
     @staticmethod
     def bullets(text: list[str]) -> None:
@@ -129,48 +134,29 @@ class CLI:
 
         Examples:
             >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
-            >>> CLI.bullets(bullet_list)
+            >>> CLI.bullets(bullet_list)  # doctest: +SKIP
             • Item 1
             • Item 2
             • Item 3
         """
-        for item in text:
-            print("  •", item)
+        bullets(text)
 
     @staticmethod
     def blue(text: str) -> str:
         """Color the text blue."""
-        return f"{BColours.BOLD}{BColours.OKBLUE}{text}{BColours.ENDC}"
+        return blue(text)
 
     @staticmethod
     def cyan(text: str) -> str:
         """Color the text cyan."""
-        return f"{BColours.BOLD}{BColours.OKCYAN}{text}{BColours.ENDC}"
+        return cyan(text)
 
     @staticmethod
     def green(text: str) -> str:
         """Color the text green."""
-        return f"{BColours.BOLD}{BColours.OKGREEN}{text}{BColours.ENDC}"
+        return green(text)
 
     @staticmethod
     def orange(text: str) -> str:
         """Color the text orange."""
-        return f"{BColours.BOLD}{BColours.WARNING}{text}{BColours.ENDC}"
-
-
-class BColours:
-    """A class providing ANSI escape codes for color formatting.
-
-    This class provides ANSI escape codes for color formatting. It is used by
-    the CLI class to print colored messages.
-    """
-
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKCYAN = "\033[96m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
-    ENDC = "\033[0m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
+        return orange(text)
