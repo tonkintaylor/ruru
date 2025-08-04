@@ -9,7 +9,6 @@ from ruru.cli.elements import (
     h2,
     h3,
 )
-from ruru.cli.styles import blue, cyan, green, orange
 
 
 class CLI:
@@ -29,7 +28,7 @@ class CLI:
             text: The text to be displayed as a heading.
 
         Examples:
-            >>> CLI.h1("hello")  # doctest: +SKIP
+            >>> CLI.h1("hello")
             ──────────────────────── hello ────────────────────────
         """
         h1(text)
@@ -42,7 +41,7 @@ class CLI:
             text: The text to be displayed as a heading.
 
         Examples:
-            >>> CLI.h2("hello world")  # doctest: +SKIP
+            >>> CLI.h2("hello world")
             ── hello world ──
         """
         h2(text)
@@ -55,7 +54,7 @@ class CLI:
             text: The text to be displayed as a heading.
 
         Examples:
-            >>> CLI.h3("hello")  # doctest: +SKIP
+            >>> CLI.h3("hello")
             ── hello
         """
         h3(text)
@@ -68,7 +67,7 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_success("This is a success message.")  # doctest: +SKIP
+            >>> CLI.alert_success("This is a success message.")
             ✔ This is a success message.
         """
         alert_success(message)
@@ -81,7 +80,7 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_danger("Danger! Something went wrong.")  # doctest: +SKIP
+            >>> CLI.alert_danger("Danger! Something went wrong.")
             ✖ Danger! Something went wrong.
         """
         alert_danger(message)
@@ -94,7 +93,7 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_warning("Warning: Proceed with caution.")  # doctest: +SKIP
+            >>> CLI.alert_warning("Warning: Proceed with caution.")
             ! Warning: Proceed with caution.
         """
         alert_warning(message)
@@ -107,7 +106,7 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_info("Information: This is important.")  # doctest: +SKIP
+            >>> CLI.alert_info("Information: This is important.")
             ℹ Information: This is important.
         """
         alert_info(message)
@@ -120,7 +119,7 @@ class CLI:
             message: The message to be displayed.
 
         Examples:
-            >>> CLI.alert_note("This is a note.")  # doctest: +SKIP
+            >>> CLI.alert_note("This is a note.")
             ℹ This is a note.
         """
         alert_note(message)
@@ -134,29 +133,9 @@ class CLI:
 
         Examples:
             >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
-            >>> CLI.bullets(bullet_list)  # doctest: +SKIP
+            >>> CLI.bullets(bullet_list)
             • Item 1
             • Item 2
             • Item 3
         """
         bullets(text)
-
-    @staticmethod
-    def blue(text: str) -> str:
-        """Color the text blue."""
-        return blue(text)
-
-    @staticmethod
-    def cyan(text: str) -> str:
-        """Color the text cyan."""
-        return cyan(text)
-
-    @staticmethod
-    def green(text: str) -> str:
-        """Color the text green."""
-        return green(text)
-
-    @staticmethod
-    def orange(text: str) -> str:
-        """Color the text orange."""
-        return orange(text)

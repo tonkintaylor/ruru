@@ -17,7 +17,7 @@ def h1(text: str) -> None:  # pylint: disable=invalid-name
         text: The text to be displayed as a heading.
 
     Examples:
-        >>> h1("hello")  # doctest: +SKIP
+        >>> h1("hello")
         ──────────────────────── hello ────────────────────────
     """
     try:
@@ -36,7 +36,7 @@ def h2(text: str) -> None:  # pylint: disable=invalid-name
         text: The text to be displayed as a heading.
 
     Examples:
-        >>> h2("hello world")  # doctest: +SKIP
+        >>> h2("hello world")
         ── hello world ──
     """
     print(f"\n── {text} ──\n")
@@ -49,7 +49,7 @@ def h3(text: str) -> None:  # pylint: disable=invalid-name
         text: The text to be displayed as a heading.
 
     Examples:
-        >>> h3("hello")  # doctest: +SKIP
+        >>> h3("hello")
         ── hello
     """
     print(f"\n── {text}\n")
@@ -62,7 +62,7 @@ def alert_success(message: str) -> None:
         message: The message to be displayed.
 
     Examples:
-        >>> alert_success("This is a success message.")  # doctest: +SKIP
+        >>> alert_success("This is a success message.")
         ✔ This is a success message.
     """
     print(bold(green(tick())), message)
@@ -75,7 +75,7 @@ def alert_danger(message: str) -> None:
         message: The message to be displayed.
 
     Examples:
-        >>> alert_danger("Danger! Something went wrong.")  # doctest: +SKIP
+        >>> alert_danger("Danger! Something went wrong.")
         ✖ Danger! Something went wrong.
     """
     print(bold(red(cross())), message)
@@ -88,7 +88,7 @@ def alert_warning(message: str) -> None:
         message: The message to be displayed.
 
     Examples:
-        >>> alert_warning("Warning: Proceed with caution.")  # doctest: +SKIP
+        >>> alert_warning("Warning: Proceed with caution.")
         ! Warning: Proceed with caution.
     """
     print(bold(yellow(warning())), message)
@@ -101,7 +101,7 @@ def alert_info(message: str) -> None:
         message: The message to be displayed.
 
     Examples:
-        >>> alert_info("Information: This is important.")  # doctest: +SKIP
+        >>> alert_info("Information: This is important.")
         ℹ Information: This is important.
     """
     print(bold(blue(info())), message)
@@ -114,7 +114,7 @@ def alert_note(message: str) -> None:
         message: The message to be displayed.
 
     Examples:
-        >>> alert_note("This is a note.")  # doctest: +SKIP
+        >>> alert_note("This is a note.")
         ℹ This is a note.
     """
     print(bold(info()), message)
@@ -128,7 +128,7 @@ def bullets(text: list[str]) -> None:
 
     Examples:
         >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
-        >>> bullets(bullet_list)  # doctest: +SKIP
+        >>> bullets(bullet_list)
         • Item 1
         • Item 2
         • Item 3

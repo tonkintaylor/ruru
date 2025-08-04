@@ -14,10 +14,6 @@ from ruru.cli import CLI
         (CLI.alert_warning, ("Warning message",), True),
         (CLI.alert_info, ("Info message",), True),
         (CLI.bullets, (["Item 1", "Item 2"],), True),
-        (CLI.blue, ("Blue text",), False),
-        (CLI.cyan, ("Cyan text",), False),
-        (CLI.green, ("Green text",), False),
-        (CLI.orange, ("Orange text",), False),
     ],
 )
 def test_cli_methods_output(
