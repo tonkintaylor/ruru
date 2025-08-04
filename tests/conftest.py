@@ -19,4 +19,4 @@ def set_terminal_width(monkeypatch):
     mock_size = Mock()
     mock_size.columns = 100
     mock_size.lines = 50
-    monkeypatch.setattr("os.get_terminal_size", lambda: mock_size)
+    monkeypatch.setattr("os.get_terminal_size", lambda fd=None: mock_size)  # noqa: ARG005
