@@ -225,6 +225,9 @@ exclude_lines = [
   "@(abc\\.)?abstractmethod",
 ]
 
+[tool.coverage.xml]
+output = "test-reports/coverage.xml"
+
 [tool.uv]
 default-groups = [ "dev", "test", "doc" ]
 required-version = "==0.8.3"              # sync with .pre-commit-config.yaml and release.yml
