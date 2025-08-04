@@ -32,20 +32,3 @@ def test_cli_methods_output(
         assert result != args[0], (
             "Expected method to return a colored string, but it didn't."
         )
-
-
-@pytest.mark.parametrize(
-    ("method", "args"),
-    [
-        (CLI.blue, ("Blue text",)),
-        (CLI.cyan, ("Cyan text",)),
-        (CLI.green, ("Green text",)),
-        (CLI.orange, ("Orange text",)),
-    ],
-)
-def test_cli_color_methods_return_values(method, args):
-    """Test color methods return colored strings."""
-    result = method(*args)
-    assert result != args[0], (
-        "Expected method to return a colored string, but it didn't."
-    )

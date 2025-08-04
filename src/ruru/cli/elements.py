@@ -6,6 +6,7 @@ and print helpers.
 
 from os import get_terminal_size
 
+from ruru.cli.styles import blue, bold, green, red, yellow
 from ruru.cli.symbols import bullet, cross, info, line, tick, warning
 
 
@@ -64,7 +65,7 @@ def alert_success(message: str) -> None:
         >>> alert_success("This is a success message.")  # doctest: +SKIP
         ✔ This is a success message.
     """
-    print(f"\033[1m\033[32m{tick()}\033[0m", message)
+    print(bold(green(tick())), message)
 
 
 def alert_danger(message: str) -> None:
@@ -77,7 +78,7 @@ def alert_danger(message: str) -> None:
         >>> alert_danger("Danger! Something went wrong.")  # doctest: +SKIP
         ✖ Danger! Something went wrong.
     """
-    print(f"\033[1m\033[31m{cross()}\033[0m", message)
+    print(bold(red(cross())), message)
 
 
 def alert_warning(message: str) -> None:
@@ -90,7 +91,7 @@ def alert_warning(message: str) -> None:
         >>> alert_warning("Warning: Proceed with caution.")  # doctest: +SKIP
         ! Warning: Proceed with caution.
     """
-    print(f"\033[1m\033[33m{warning()}\033[0m", message)
+    print(bold(yellow(warning())), message)
 
 
 def alert_info(message: str) -> None:
@@ -103,7 +104,7 @@ def alert_info(message: str) -> None:
         >>> alert_info("Information: This is important.")  # doctest: +SKIP
         ℹ Information: This is important.
     """
-    print(f"\033[1m\033[34m{info()}\033[0m", message)
+    print(bold(blue(info())), message)
 
 
 def alert_note(message: str) -> None:
@@ -116,7 +117,7 @@ def alert_note(message: str) -> None:
         >>> alert_note("This is a note.")  # doctest: +SKIP
         ℹ This is a note.
     """
-    print(f"\033[1m{info()}\033[0m", message)
+    print(bold(info()), message)
 
 
 def bullets(text: list[str]) -> None:
