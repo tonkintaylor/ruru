@@ -1,4 +1,3 @@
-# ruff: noqa: ERA001, SIM103
 """ANSI color and text styling utilities for CLI output."""
 
 import os
@@ -19,7 +18,7 @@ class _AnsiCodes:
     ITALIC = "\033[3m"
     UNDERLINE = "\033[4m"
 
-    # Colors (foreground)
+    # Colors (for the foreground)
     BLACK = "\033[30m"
     RED = "\033[31m"
     GREEN = "\033[32m"
@@ -29,7 +28,7 @@ class _AnsiCodes:
     CYAN = "\033[36m"
     WHITE = "\033[37m"
 
-    # Bright colors (foreground)
+    # Bright colors (for the foreground)
     BRIGHT_BLACK = "\033[90m"
     BRIGHT_RED = "\033[91m"
     BRIGHT_GREEN = "\033[92m"
@@ -60,10 +59,7 @@ def _supports_color() -> bool:
 
     # Check TERM environment variable
     term = os.getenv("TERM", "").lower()
-    if "color" in term or term in ("xterm", "xterm-256color", "screen", "linux"):
-        return True
-
-    return False
+    return "color" in term or term in ("xterm", "xterm-256color", "screen", "linux")
 
 
 def _apply_style(text: str, code: str) -> str:
