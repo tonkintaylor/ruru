@@ -236,5 +236,6 @@ src/**/_version.py
 
 # Automatically generated Sphinx API documentation
 doc/source/_apidoc/
-.github/workflows/ci.yml
+
+# Development scratchpad (unrelated to Sphinx API documentation)
 .github/scratchpad.md
