@@ -10,7 +10,7 @@ from ruru.cli.styles import blue, bold, green, red, yellow
 from ruru.cli.symbols import bullet, cross, info, line, tick, warning
 
 
-def h1(text: str) -> None:  # pylint: disable=invalid-name
+def h1(text: str) -> None:
     """Prints a level 1 heading.
 
     Args:
@@ -29,7 +29,7 @@ def h1(text: str) -> None:  # pylint: disable=invalid-name
     print(f"\n{dashes} {text} {dashes}\n")
 
 
-def h2(text: str) -> None:  # pylint: disable=invalid-name
+def h2(text: str) -> None:
     """Prints a level 2 heading.
 
     Args:
@@ -42,7 +42,7 @@ def h2(text: str) -> None:  # pylint: disable=invalid-name
     print(f"\n── {text} ──\n")
 
 
-def h3(text: str) -> None:  # pylint: disable=invalid-name
+def h3(text: str) -> None:
     """Prints a level 3 heading.
 
     Args:
