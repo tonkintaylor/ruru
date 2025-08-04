@@ -23,4 +23,12 @@ Inspired by the R [`config`](https://rstudio.github.io/config/) package.
 
 The `ruru.cli` module provides utilities for enhanced command-line interface output, including colored text, formatted headings, alert messages, and bullet-point lists.
 
+Recommended usage:
+
+```python
+from ruru import cli
+cli.h1("Heading")
+cli.alert("This is an alert message")
+```
+
 Inspired by the R [`cli`](https://cli.r-lib.org/reference/index.html) package.
