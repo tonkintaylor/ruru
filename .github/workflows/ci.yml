@@ -59,7 +59,7 @@ jobs:
         uses: pavelzw/pytest-action@510c5e90c360a185039bea56ce8b3e7e51a16507 # v2.2.0
         if: matrix.pytest
         with:
-          custom-arguments: --cov --junitxml=junit.xml -o junit_family=legacy
+          custom-arguments: --cov --junitxml=junit.xml -o junit_family=legacy --cov-report=xml
 
       - name: Create test reports directory
         if: matrix.pytest && matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
