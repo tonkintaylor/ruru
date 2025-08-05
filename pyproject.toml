@@ -203,6 +203,7 @@ log_cli_level = "INFO"
 [tool.coverage.run]
 source = [ "src" ]
 omit = [ "*/pytest-of-*/*", "*/_version.py", "src/archive/*" ]
+relative_files = true
 
 [tool.coverage.report]
 ignore_errors = true
