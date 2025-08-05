@@ -72,7 +72,6 @@ class TestGet:
 
 class TestFindConfigFile:
     def test_existing_file(self, tmp_path: Path):
-        """An existing file."""
         temp_config_path = tmp_path / CONFIG_FILE
         temp_config_path.write_text("dummy_content")
         config_path = find_config_file(temp_config_path, use_parent=False)
@@ -85,7 +84,6 @@ class TestFindConfigFile:
 
 class TestReplaceEnvVars:
     def test_replace_env_vars_dict(self):
-        """Test that replace_env_vars replaces environment variables in a dictionary."""
         os.environ["TEST_VAR"] = "replaced_value"
         input_data = {"key1": "$TEST_VAR", "key2": "value2"}
         expected_output = {"key1": "replaced_value", "key2": "value2"}
@@ -93,7 +91,6 @@ class TestReplaceEnvVars:
         del os.environ["TEST_VAR"]
 
     def test_replace_env_vars_list(self):
-        """Test that replace_env_vars replaces environment variables in a list."""
         os.environ["TEST_VAR"] = "replaced_value"
         input_data = ["$TEST_VAR", "value2"]
         expected_output = ["replaced_value", "value2"]
