@@ -237,5 +237,5 @@ src/**/_version.py
 # Automatically generated Sphinx API documentation
 doc/source/_apidoc/
 
-# Development scratchpad (unrelated to Sphinx API documentation)
+# GitHub Copilot scratchpad
 .github/scratchpad.md

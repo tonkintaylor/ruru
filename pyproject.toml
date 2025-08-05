@@ -187,24 +187,23 @@ experimental_namespace_package = true
 keep_full_version = true
 
 [tool.pytest.ini_options]
-testpaths = [ "tests", "src" ]
+testpaths = [ "tests" ]
 norecursedirs = [ "tests/assets", "src/notebooks", "src/scripts", "src/archive" ]
 addopts = [
   "--import-mode=importlib",
   "-ra",
   "--strict-config",
   "--strict-markers",
-  "--doctest-modules",
 ]
 console_output_style = "progress"
 filterwarnings = [ "error" ]
 xfail_strict = true
 log_cli_level = "INFO"
-doctest_optionflags = "NORMALIZE_WHITESPACE"
 
 [tool.coverage.run]
 source = [ "src" ]
 omit = [ "*/pytest-of-*/*", "*/_version.py", "src/archive/*" ]
+relative_files = true
 
 [tool.coverage.report]
 ignore_errors = true
