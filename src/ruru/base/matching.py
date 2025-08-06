@@ -40,7 +40,7 @@ def match_arg(
     """
     # Use pmatch for partial matching
     # Ensure choices are unique
-    choices = list(set(choices))
+    choices = list(dict.fromkeys(choices))
     match_idx = pmatch(arg, choices)
 
     if match_idx is None:
