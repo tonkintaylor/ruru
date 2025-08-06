@@ -1,7 +1,7 @@
 """Functionality for Argument Verification Using Partial Matching
 
 This module provides Python equivalents of R's match.arg and pmatch functions.
-Inspired by the R package `base` (https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/match.arg).
+Inspired by the R package `base` (https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html).
 """
 
 from collections.abc import Iterable
@@ -21,6 +21,8 @@ def match_arg(
     - Automatic deduplication of choices
     - Multiple matches when several_ok=True
     - Proper error handling for ambiguous matches
+
+    Inspired by: https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.arg.html
 
     Args:
         arg: The argument string to be matched against choices.
@@ -82,6 +84,8 @@ def pmatch(x: str, table: Iterable[str]) -> int | None:
     - If no match, return None
     - If ambiguous (multiple prefix matches), return -1
     - Empty string matches nothing
+
+    Inspired by: https://stat.ethz.ch/R-manual/R-devel/library/base/html/pmatch.html
 
     Args:
         x: String to match

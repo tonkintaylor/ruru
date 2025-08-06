@@ -17,9 +17,9 @@ A collection of Python utilities ported from the R ecosystem.
 
 The `ruru.base` module provides utilities for argument matching:
 
-- `match_arg`: A Python equivalent of R's [`match.arg`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/match.arg) function for verifying function arguments against a set of valid options.
+- `match_arg`: A Python equivalent of R's [`match.arg`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.arg.html) function for verifying function arguments against a set of valid options.
 
-Inspired by the R [`config`](https://rstudio.github.io/config/articles/introduction.html/) package.
+Inspired by the R [`base`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) package.
 
 ### `config` module
 
