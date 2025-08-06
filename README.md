@@ -33,7 +33,7 @@ config_path = files("ruru.cli").joinpath("config.yml")
 config = get_config(file = config_path)
 ```
 
-Inspired by the R [`config`](https://rstudio.github.io/config/articles/introduction.html/) package.
+Inspired by the R [`config`](https://rstudio.github.io/config/index.html) package.
 
 ### `cli` module
 
