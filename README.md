@@ -27,10 +27,10 @@ The `ruru.config` module gives an easy way to manage of configuration settings i
 
 ```python
 from importlib.resources import files
-from ruru.config import get as get_config
+from ruru import config
 
 config_path = files("ruru.cli").joinpath("config.yml") 
-config = get_config(file = config_path)
+config_dict = config.get(file = config_path)
 ```
 
 Inspired by the R [`config`](https://rstudio.github.io/config/index.html) package.
