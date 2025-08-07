@@ -25,6 +25,8 @@ Inspired by the R [`base`](https://stat.ethz.ch/R-manual/R-devel/library/base/ht
 
 The `ruru.config` module gives an easy way to manage of configuration settings in Python applications via YAML files.
 
+Recommended usage:
+
 ```python
 from importlib.resources import files
 from ruru import config
