@@ -29,7 +29,7 @@ The `ruru.config` module gives an easy way to manage of configuration settings i
 from importlib.resources import files
 from ruru import config
 
-config_path = files("ruru.cli").joinpath("config.yml") 
+config_path = files("<mypkg>.cli").joinpath("config.yml") 
 config_dict = config.get(file = config_path)
 ```
 
