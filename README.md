@@ -13,11 +13,30 @@ A collection of Python utilities ported from the R ecosystem.
 
 ## Features
 
+### `base` module
+
+The `ruru.base` module provides core utilities:
+
+- `match_arg`: A Python equivalent of R's [`match.arg`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.arg.html) function for verifying function arguments against a set of valid options.
+- `pmatch`: A Python equivalent of R's [`pmatch`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/pmatch.html) function for finding partial substring matches against a set of reference strings.
+
+Inspired by the R [`base`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) package.
+
 ### `config` module
 
 The `ruru.config` module gives an easy way to manage of configuration settings in Python applications via YAML files.
 
-Inspired by the R [`config`](https://rstudio.github.io/config/articles/introduction.html/) package.
+Recommended usage:
+
+```python
+from importlib.resources import files
+from ruru import config
+
+config_path = files("<mypkg>.cli").joinpath("config.yml") 
+config_dict = config.get(file = config_path)
+```
+
+Inspired by the R [`config`](https://rstudio.github.io/config/index.html) package.
 
 ### `cli` module
 

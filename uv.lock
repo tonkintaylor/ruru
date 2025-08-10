@@ -2414,6 +2414,7 @@ wheels = [
 name = "ruru"
 source = { editable = "." }
 dependencies = [
+    { name = "pydantic" },
     { name = "pyyaml" },
 ]
 
@@ -2448,7 +2449,10 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pyyaml", specifier = ">=6.0.2" }]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.0.0" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
+]
 
 [package.metadata.requires-dev]
 dev = [
