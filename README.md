@@ -15,9 +15,10 @@ A collection of Python utilities ported from the R ecosystem.
 
 ### `base` module
 
-The `ruru.base` module provides utilities for argument matching:
+The `ruru.base` module provides core utilities:
 
 - `match_arg`: A Python equivalent of R's [`match.arg`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.arg.html) function for verifying function arguments against a set of valid options.
+- `pmatch`: A Python equivalent of R's [`pmatch`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/pmatch.html) function for finding partial substring matches against a set of reference strings.
 
 Inspired by the R [`base`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) package.
 
