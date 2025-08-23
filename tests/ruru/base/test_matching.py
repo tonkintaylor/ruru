@@ -193,14 +193,14 @@ class TestMatchArgListInput:
 
     def test_match_arg_exact_duplicate_case(self, standard_choices):
         """Test the specific duplicate case requested in comment."""
-        result = match_arg(['app', 'app'], standard_choices, several_ok=True)
-        assert result == ['apple', 'apple']
+        result = match_arg(["app", "app"], standard_choices, several_ok=True)
+        assert result == ["apple", "apple"]
 
     @pytest.mark.parametrize(
         ("query_list", "expected"),
         [
             (["apple"], ["apple"]),  # Single element exact match
-            (["ban"], ["banana"]),   # Single element partial match
+            (["ban"], ["banana"]),  # Single element partial match
             (["app", "ban"], ["apple", "banana"]),  # Multiple partial matches
         ],
     )
