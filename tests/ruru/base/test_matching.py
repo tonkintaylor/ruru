@@ -146,3 +146,67 @@ class TestMatchArgEdgeCases:
         choices = ["Apple", "apple", "APPLE"]
         result = match_arg("app", choices)
         assert result == "apple"
+
+
+class TestMatchArgListInput:
+    """Tests for list input functionality."""
+
+    def test_match_arg_list_input_several_ok_true(self, standard_choices):
+        """Test list input with several_ok=True returns correct list."""
+        result = match_arg(["ban", "app"], standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple"])
+
+    def test_match_arg_list_input_several_ok_false(self, standard_choices):
+        """Test list input with several_ok=False raises error."""
+        error_msg = "List input is only allowed when several_ok=True"
+        with pytest.raises(ValueError, match=error_msg):
+            match_arg(["ban", "app"], standard_choices, several_ok=False)
+
+    def test_match_arg_list_with_ambiguous_element(self, partial_match_choices):
+        """Test list with ambiguous element returns all matches when several_ok=True."""
+        # "ap" is ambiguous (matches both "apple" and "apricot")
+        result = match_arg(["ban", "ap"], partial_match_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple", "apricot"])
+
+    def test_match_arg_list_with_no_match_element(self, standard_choices):
+        """Test list with no-match element raises error with clear message."""
+        error_msg = "Error in list element 1 \\('xyz'\\).*not valid"
+        with pytest.raises(ValueError, match=error_msg):
+            match_arg(["ban", "xyz"], standard_choices, several_ok=True)
+
+    def test_match_arg_list_mixed_matches(self):
+        """Test list with exact, partial, and multiple matches."""
+        choices = ["apple", "apricot", "banana", "blueberry"]
+        # "apple" (exact), "ban" (partial), "a" (multiple partial)
+        result = match_arg(["apple", "ban", "a"], choices, several_ok=True)
+        assert sorted(result) == sorted(["apple", "banana", "apple", "apricot"])
+
+    def test_match_arg_empty_list(self, standard_choices):
+        """Test empty list input returns empty list."""
+        result = match_arg([], standard_choices, several_ok=True)
+        assert result == []
+
+    def test_match_arg_list_with_duplicates(self, standard_choices):
+        """Test list input with duplicate arguments."""
+        result = match_arg(["ban", "ban", "app"], standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "banana", "apple"])
+
+    def test_match_arg_exact_duplicate_case(self, standard_choices):
+        """Test the specific duplicate case requested in comment."""
+        result = match_arg(["app", "app"], standard_choices, several_ok=True)
+        assert result == ["apple", "apple"]
+
+    @pytest.mark.parametrize(
+        ("query_list", "expected"),
+        [
+            (["apple"], ["apple"]),  # Single element exact match
+            (["ban"], ["banana"]),  # Single element partial match
+            (["app", "ban"], ["apple", "banana"]),  # Multiple partial matches
+        ],
+    )
+    def test_match_arg_list_various_scenarios(
+        self, standard_choices, query_list, expected
+    ):
+        """Test various list input scenarios."""
+        result = match_arg(query_list, standard_choices, several_ok=True)
+        assert sorted(result) == sorted(expected)

@@ -11,36 +11,65 @@ from pydantic import validate_call
 
 @validate_call
 def match_arg(
-    arg: str, choices: list[str], *, several_ok: bool = False
+    arg: str | list[str], choices: list[str], *, several_ok: bool = False
 ) -> str | list[str]:
-    """Matches the argument against a list of candidate values with partial matching.
+    """Matches the argument(s) against a list of candidate values with partial matching.
 
     Provides Python equivalent of R's match.arg function with support for:
     - Exact string matching (preferred)
     - Partial string matching using prefix matching
     - Automatic deduplication of choices
     - Multiple matches when several_ok=True
+    - Multi-string (list) input for batch matching
     - Proper error handling for ambiguous matches
 
     Inspired by: https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.arg.html
 
     Args:
-        arg: The argument string to be matched against choices.
+        arg: The argument string or list of strings to be matched against choices.
         choices: List of valid choices to match against. Duplicates are removed.
         several_ok: If True, allows multiple matches and always returns list.
-                   If False, requires unique match and returns single string.
+                   If False, requires unique match. For list input, raises error.
 
     Returns:
-        When several_ok=False: Single matched string.
-        When several_ok=True: List containing matched string(s).
+        When arg is str and several_ok=False: Single matched string.
+        When arg is str and several_ok=True: List containing matched string(s).
+        When arg is list and several_ok=True: List containing all matched strings.
         For ambiguous matches with several_ok=True, returns all partial matches.
 
     Raises:
-        ValueError: If no match found, or if ambiguous match when several_ok=False.
+        ValueError: If no match found, if ambiguous match when several_ok=False,
+                   or if list input provided when several_ok=False.
     """
     # Use pmatch for partial matching
     # Ensure choices are unique
     choices = list(dict.fromkeys(choices))
+
+    # Handle list input
+    if isinstance(arg, list):
+        if not several_ok:
+            error_message = (
+                "List input is only allowed when several_ok=True. "
+                "Use several_ok=True or provide a single string argument."
+            )
+            raise ValueError(error_message)
+
+        # Process each element in the list
+        all_matches = []
+        for i, single_arg in enumerate(arg):
+            try:
+                # Recursively call match_arg for each element
+                result = match_arg(single_arg, choices, several_ok=True)
+                # result is always a list when several_ok=True
+                all_matches.extend(result)
+            except ValueError as e:
+                # Re-raise with information about which element failed
+                error_message = f"Error in list element {i} ('{single_arg}'): {e}"
+                raise ValueError(error_message) from e
+
+        return all_matches
+
+    # Original single string logic below
     match_idx = pmatch(arg, choices)
 
     if match_idx is None:

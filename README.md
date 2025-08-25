@@ -17,8 +17,26 @@ A collection of Python utilities ported from the R ecosystem.
 
 The `ruru.base` module provides core utilities:
 
-- `match_arg`: A Python equivalent of R's [`match.arg`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.arg.html) function for verifying function arguments against a set of valid options.
+- `match_arg`: A Python equivalent of R's [`match.arg`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/match.arg.html) function for verifying function arguments against a set of valid options. Recommended usage:
+
+```python
+from ruru.base import match_arg
+
+user_choice = "apple"
+available_choices = ["Apple", "Banana", "Cherry"]
+
+# Normalize user input before passing it to match_arg.
+# Which transformation to use depends on the style of available_choices:
+#   - .title() if choices look like "Apple"
+#   - .upper() if choices look like "APPLE"
+#   - .lower() if choices look like "apple"
+
+user_choice = match_arg(user_choice.title(), available_choices)
+```
+
 - `pmatch`: A Python equivalent of R's [`pmatch`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/pmatch.html) function for finding partial substring matches against a set of reference strings.
+
+
 
 Inspired by the R [`base`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html) package.
 
