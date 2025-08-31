@@ -2,8 +2,6 @@
 
 # CI: pass pre-commit gate before committing
 
-The last CI failure was caused by ruff-format modifying files (“files were modified by this hook”), which makes pre-commit exit with code 1. Run the hooks locally until they make no changes, then commit.
-
 ## One-time setup
 
 - Sync dependencies (uv):
