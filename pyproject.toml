@@ -17,8 +17,11 @@ description = "A collection of Python utilities ported from the R ecosystem."
 readme = "README.md"
 license = "MIT"
 license-files = [ "LICENSE" ]
+maintainers = [
+  { name = "Data + Analytics", email = "Sub-DisciplineData+AnalyticsStaff@tonkintaylor.co.nz" },
+]
 authors = [
-  { name = "Tonkin & Taylor Limited", email = "Sub-DisciplineData+AnalyticsStaff@tonkintaylor.co.nz" },
+  { name = "Harel Lustiger", email = "hlustiger@tonkintaylor.co.nz" },
   { name = "Nathan McDougall", email = "nmcdougall@tonkintaylor.co.nz" },
 ]
 requires-python = ">=3.10"
@@ -227,6 +230,10 @@ exclude_lines = [
 
 [tool.coverage.xml]
 output = "test-reports/coverage.xml"
+
+[tool.ruru.metadata]
+copyright_holders = [ "Tonkin & Taylor Limited" ]
+funders = [ "Tonkin & Taylor Limited" ]
 
 [tool.uv]
 default-groups = [ "dev", "test", "doc" ]
