@@ -4,17 +4,17 @@
 - Sync dependencies (uv):
   - `uv sync`
 - Install the git hook:
-  - `uvx pre-commit install` (or `pre-commit install` if pre-commit is on PATH)
+  - `uv run pre-commit install` (or `pre-commit install` if pre-commit is on PATH)
 
 ## Before every commit (from repo root)
 1) Auto-format fast path (optional, speeds things up)
-- `uvx ruff format .`
+- `uv run ruff format .`
 
 2) Run all hooks and apply fixes
-- `uvx pre-commit run --all-files`
+- `uv run pre-commit run --all-files`
 - If it reports “files were modified by this hook”:
   - `git add -A`
-  - `uvx pre-commit run --all-files`
+  - `uv run pre-commit run --all-files`
 - Repeat until pre-commit finishes with no modifications.
 
 3) Commit
@@ -57,4 +57,6 @@ Always gather up-to-date docs before writing new code or using a new API.
 
 Quick self-check before committing:
 - Search and remove any occurrences: `git grep -n -E '\bT[O0]\s?DO\b|@todo' || true`
-- Then run: `uvx ruff format . && uvx pre-commit run --all-files`
+- Then run: `uv run ruff format . && uv run pre-commit run --all-files`
+
+---
