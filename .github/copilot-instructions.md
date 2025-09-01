@@ -21,7 +21,7 @@
 - Limit line length to 100 characters.
 - We are using uv to install packages.
 - Never create functions that return more than one output value.
-- Never use `argparse` unless explicitly instructed; prefer higher-level CLIs (e.g., Typer or Click) or a project-specific CLI solution.
+- Never use `argparse` unless explicitly instructed.
 - Never return tuples; use dictionaries for multiple return values.
 - Do not add exceptions to functions unless explicitly requested.
 - Prefer to type hint strictly with the likes of `Literal["a", "b"]` instead of hinting broader types like `str`. This means the constraints on the input arguments to a function can reside in the type annotation rather than the docstring. Consider @validate_call (from pydantic import validate_call) to avoid boilerplate case-checking in such cases.
