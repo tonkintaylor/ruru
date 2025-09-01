@@ -231,10 +231,6 @@ exclude_lines = [
 [tool.coverage.xml]
 output = "test-reports/coverage.xml"
 
-[tool.ruru.metadata]
-copyright_holders = [ "Tonkin & Taylor Limited" ]
-funders = [ "Tonkin & Taylor Limited" ]
-
 [tool.uv]
 default-groups = [ "dev", "test", "doc" ]
 required-version = "==0.8.3"              # sync with .pre-commit-config.yaml and release.yml
