@@ -121,12 +121,12 @@ def alert_note(message: str) -> None:
     print(bold(info()), message)
 
 
-def bullets(text: list[str] | dict[str, Any]) -> None:
+def bullets(text: list[Any] | dict[str, Any]) -> None:
     """Prints a list of items or dict key-value pairs with bullet points.
 
     Args:
-        text: A list of items to be displayed with bullet points, or a dict of
-            key-value pairs to be displayed as "• key: value".
+        text: A list of items (strings, numbers, etc.) to be displayed with bullet points, 
+            or a dict of key-value pairs to be displayed as "• key: value".
 
     Examples:
         >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
@@ -134,6 +134,12 @@ def bullets(text: list[str] | dict[str, Any]) -> None:
         • Item 1
         • Item 2
         • Item 3
+
+        >>> mixed_list = ["Text item", 42, 3.14]
+        >>> bullets(mixed_list)
+        • Text item
+        • 42
+        • 3.14
 
         >>> bullet_dict = {"name": "John", "age": 30, "hobbies": ["reading", "coding"]}
         >>> bullets(bullet_dict)
@@ -150,4 +156,4 @@ def bullets(text: list[str] | dict[str, Any]) -> None:
             print(f"  {bullet()}", f"{key}: {formatted_value}")
     else:
         for item in text:
-            print(f"  {bullet()}", item)
+            print(f"  {bullet()}", str(item))
