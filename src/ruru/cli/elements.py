@@ -125,7 +125,7 @@ def bullets(text: list[Any] | dict[str, Any]) -> None:
     """Prints a list of items or dict key-value pairs with bullet points.
 
     Args:
-        text: A list of items (strings, numbers, etc.) to be displayed with bullet points, 
+        text: A list of items (strings, numbers, etc.) to be displayed with bullets,
             or a dict of key-value pairs to be displayed as "• key: value".
 
     Examples:
