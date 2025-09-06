@@ -34,3 +34,30 @@ def test_bullets_produce_output(capfd, items):
     cli.bullets(items)
     captured = capfd.readouterr()
     assert captured.out != ""
+
+
+def test_bullets_with_dict(capfd):
+    """Test bullets function with dict input."""
+    input_dict = {
+        'summary': 'User requests a working example for D3.js tree components.',
+        'category': 'Code Request',
+        'tags': ['HTML', 'D3.js', 'JavaScript', 'Tree Component', 'Data Visualization']
+    }
+    cli.bullets(input_dict)
+    captured = capfd.readouterr()
+    expected_output = ("  • summary: User requests a working example for D3.js tree components.\n"
+                       "  • category: Code Request\n"
+                       "  • tags: HTML, D3.js, JavaScript, Tree Component, Data Visualization\n")
+    assert captured.out == expected_output
+
+
+def test_bullets_with_mixed_types(capfd):
+    """Test bullets function with mixed types in list."""
+    mixed_list = ["Text item", 42, 3.14, True]
+    cli.bullets(mixed_list)
+    captured = capfd.readouterr()
+    expected_output = ("  • Text item\n"
+                       "  • 42\n"
+                       "  • 3.14\n"
+                       "  • True\n")
+    assert captured.out == expected_output

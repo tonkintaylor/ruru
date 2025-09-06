@@ -5,6 +5,7 @@ and print helpers.
 """
 
 from os import get_terminal_size
+from typing import Any
 
 from ruru.cli.styles import blue, bold, green, red, yellow
 from ruru.cli.symbols import bullet, cross, info, line, tick, warning
@@ -120,11 +121,12 @@ def alert_note(message: str) -> None:
     print(bold(info()), message)
 
 
-def bullets(text: list[str]) -> None:
-    """Prints a list of items with bullet points.
+def bullets(text: list[Any] | dict[str, Any]) -> None:
+    """Prints a list of items or dict key-value pairs with bullet points.
 
     Args:
-        text: A list of items to be displayed with bullet points.
+        text: A list of items (strings, numbers, etc.) to be displayed with bullets,
+            or a dict of key-value pairs to be displayed as "• key: value".
 
     Examples:
         >>> bullet_list = ["Item 1", "Item 2", "Item 3"]
@@ -132,6 +134,26 @@ def bullets(text: list[str]) -> None:
         • Item 1
         • Item 2
         • Item 3
+
+        >>> mixed_list = ["Text item", 42, 3.14]
+        >>> bullets(mixed_list)
+        • Text item
+        • 42
+        • 3.14
+
+        >>> bullet_dict = {"name": "John", "age": 30, "hobbies": ["reading", "coding"]}
+        >>> bullets(bullet_dict)
+        • name: John
+        • age: 30
+        • hobbies: reading, coding
     """
-    for item in text:
-        print(f"  {bullet()}", item)
+    if isinstance(text, dict):
+        for key, value in text.items():
+            if isinstance(value, list):
+                formatted_value = ", ".join(str(v) for v in value)
+            else:
+                formatted_value = str(value)
+            print(f"  {bullet()}", f"{key}: {formatted_value}")
+    else:
+        for item in text:
+            print(f"  {bullet()}", str(item))
