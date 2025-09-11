@@ -45,8 +45,23 @@ def match_arg(
     """
     ...
 
-@march_arg.register(str)
-def match_arg(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
+@match_arg.register(str)
+def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
+    """Internal implementation for string argument matching.
+    
+    Args:
+        arg: The argument string to be matched against choices.
+        choices: List of valid choices to match against. Duplicates are removed.
+        several_ok: If True, allows multiple matches and always returns list.
+                   If False, requires unique match and returns single string.
+    Returns:
+        When several_ok=False: Single matched string.
+        When several_ok=True: List containing matched string(s).
+        For ambiguous matches with several_ok=True, returns all partial matches.
+        
+    Raises:
+        ValueError: If no match found, or if ambiguous match when several_ok=False.
+    """
     # Ensure choices are unique
     choices = list(dict.fromkeys(choices))
 
