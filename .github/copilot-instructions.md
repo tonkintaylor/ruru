@@ -53,8 +53,6 @@
 - When importing internal modules, do not include the "src" folder in the import path as it is already defined in pyproject.toml
 
 ## Linter
-
-- Run `pre-commit run ruff-format --all-files` before committing new code
 - For file-level linter suppressions, use `# ruff: noqa: RULE1, RULE2` format (not `# ruff noqa:`)
 - For line-level suppressions, use `# noqa: RULE1, RULE2` format
 - Use `pathlib.Path` for all filesystem operations instead of `os.path`. Path objects provide a more readable and maintainable object-oriented interface (e.g., `Path('dir') / 'file.txt'` instead of `os.path.join()`, `path.exists()` instead of `os.path.exists()`, etc.)
