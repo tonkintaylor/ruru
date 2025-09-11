@@ -43,6 +43,10 @@ def match_arg(
         ValueError: If no match found, if ambiguous match when several_ok=False,
                    or if list input provided when several_ok=False.
     """
+    ...
+
+@march_arg.register(str)
+def match_arg(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
     # Ensure choices are unique
     choices = list(dict.fromkeys(choices))
 
@@ -80,7 +84,7 @@ def match_arg(
         return matched_choice
 
 
-@_match_arg_impl.register(list)
+@march_arg.register(list)
 def _(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[str]:
     """Internal implementation for list argument matching.
 
