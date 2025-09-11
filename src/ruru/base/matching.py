@@ -108,7 +108,7 @@ def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
         return matched_choice
 
 
-@_march_arg.register(list)
+@_match_arg.register(list)
 def _(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[str]:
     """Internal implementation for list argument matching.
 
