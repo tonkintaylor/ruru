@@ -6,12 +6,15 @@ Inspired by the R package `base` (https://stat.ethz.ch/R-manual/R-devel/library/
 
 from collections.abc import Iterable
 from functools import singledispatch
+from typing import overload
 
 from pydantic import validate_call
 
-
+@overload
+def match_arg(arg: str, choices: list[str], *, several_ok: bool = False) -> str: ...
+@overload
+def match_arg(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[str]: ...
 @validate_call
-@singledispatch
 def match_arg(
     arg: str | list[str], choices: list[str], *, several_ok: bool = False
 ) -> str | list[str]:
@@ -43,9 +46,15 @@ def match_arg(
         ValueError: If no match found, if ambiguous match when several_ok=False,
                    or if list input provided when several_ok=False.
     """
+    return _match_arg(arg, choices, several_ok=several_ok)
+
+@singledispatch
+def _match_arg(
+    arg: str | list[str], choices: list[str], *, several_ok: bool = False
+) -> str | list[str]:
     ...
 
-@match_arg.register(str)
+@_match_arg.register(str)
 def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
     """Internal implementation for string argument matching.
     
@@ -99,7 +108,7 @@ def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
         return matched_choice
 
 
-@march_arg.register(list)
+@_march_arg.register(list)
 def _(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[str]:
     """Internal implementation for list argument matching.
 
