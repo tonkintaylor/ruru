@@ -11,6 +11,7 @@ from pydantic import validate_call
 
 
 @validate_call
+@singledispatch
 def match_arg(
     arg: str | list[str], choices: list[str], *, several_ok: bool = False
 ) -> str | list[str]:
@@ -41,71 +42,6 @@ def match_arg(
     Raises:
         ValueError: If no match found, if ambiguous match when several_ok=False,
                    or if list input provided when several_ok=False.
-    """
-    return _match_arg_impl(arg, choices, several_ok=several_ok)
-
-
-@validate_call
-def pmatch(x: str, table: Iterable[str]) -> int | None:
-    """Partial matching function similar to R's charmatch/pmatch.
-
-    Performs partial string matching following R's behavior:
-    - Prefer exact match (return 0-based index)
-    - If unique prefix match, return index
-    - If no match, return None
-    - If ambiguous (multiple prefix matches), return -1
-    - Empty string matches nothing
-
-    Inspired by: https://stat.ethz.ch/R-manual/R-devel/library/base/html/pmatch.html
-
-    Args:
-        x: String to match
-        table: Iterable of strings to match against
-
-    Returns:
-        Index of match if found and unique, -1 if ambiguous, None if no match
-    """
-    if not x:  # Empty string matches nothing
-        return None
-
-    table_list = list(table)
-
-    # First check for exact match
-    try:
-        return table_list.index(x)
-    except ValueError:
-        pass
-
-    # Check for prefix matches
-    matches = [i for i, choice in enumerate(table_list) if choice.startswith(x)]
-
-    if not matches:
-        return None
-    elif len(matches) == 1:
-        return matches[0]
-    else:
-        return -1  # Ambiguous
-
-
-@singledispatch
-def _match_arg_impl(
-    arg: str, choices: list[str], *, several_ok: bool = False
-) -> str | list[str]:
-    """Internal implementation for string argument matching.
-
-    Args:
-        arg: The argument string to be matched against choices.
-        choices: List of valid choices to match against. Duplicates are removed.
-        several_ok: If True, allows multiple matches and always returns list.
-                   If False, requires unique match and returns single string.
-
-    Returns:
-        When several_ok=False: Single matched string.
-        When several_ok=True: List containing matched string(s).
-        For ambiguous matches with several_ok=True, returns all partial matches.
-
-    Raises:
-        ValueError: If no match found, or if ambiguous match when several_ok=False.
     """
     # Ensure choices are unique
     choices = list(dict.fromkeys(choices))
@@ -186,3 +122,45 @@ def _(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[s
             raise ValueError(error_message) from e
 
     return all_matches
+
+
+@validate_call
+def pmatch(x: str, table: Iterable[str]) -> int | None:
+    """Partial matching function similar to R's charmatch/pmatch.
+
+    Performs partial string matching following R's behavior:
+    - Prefer exact match (return 0-based index)
+    - If unique prefix match, return index
+    - If no match, return None
+    - If ambiguous (multiple prefix matches), return -1
+    - Empty string matches nothing
+
+    Inspired by: https://stat.ethz.ch/R-manual/R-devel/library/base/html/pmatch.html
+
+    Args:
+        x: String to match
+        table: Iterable of strings to match against
+
+    Returns:
+        Index of match if found and unique, -1 if ambiguous, None if no match
+    """
+    if not x:  # Empty string matches nothing
+        return None
+
+    table_list = list(table)
+
+    # First check for exact match
+    try:
+        return table_list.index(x)
+    except ValueError:
+        pass
+
+    # Check for prefix matches
+    matches = [i for i, choice in enumerate(table_list) if choice.startswith(x)]
+
+    if not matches:
+        return None
+    elif len(matches) == 1:
+        return matches[0]
+    else:
+        return -1  # Ambiguous
