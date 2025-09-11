@@ -141,7 +141,7 @@ def _(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[s
     for i, single_arg in enumerate(arg):
         try:
             # Recursively call match_arg for each element
-            result = _match_arg_impl(single_arg, choices, several_ok=True)
+            result = _match_arg(single_arg, choices, several_ok=True)
             # result is always a list when several_ok=True
             all_matches.extend(result)
         except ValueError as e:
