@@ -21,7 +21,7 @@ def match_arg(
 ) -> list[str]: ...
 @validate_call
 def match_arg(
-    arg: str | list[str], choices: list[str], *, several_ok: bool = False
+    arg, choices: list[str], *, several_ok: bool = False
 ) -> str | list[str]:
     """Matches the argument(s) against a list of candidate values with partial matching.
 
