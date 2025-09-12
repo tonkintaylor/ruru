@@ -17,11 +17,11 @@ def match_arg(
 ) -> str: ...
 @overload
 def match_arg(
-    arg: str, choices: list[str], *, several_ok: Literal[True]
+    arg: str | list[str], choices: list[str], *, several_ok: Literal[True]
 ) -> list[str]: ...
 @validate_call
 def match_arg(
-    arg, choices: list[str], *, several_ok: bool = False
+    arg: str | list[str], choices: list[str], *, several_ok: bool = False
 ) -> str | list[str]:
     """Matches the argument(s) against a list of candidate values with partial matching.
 
