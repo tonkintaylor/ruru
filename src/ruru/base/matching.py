@@ -17,7 +17,7 @@ def match_arg(
 ) -> str: ...
 @overload
 def match_arg(
-    arg: str | list[str], choices: list[str], *, several_ok: Literal[True]
+    arg: str, choices: list[str], *, several_ok: Literal[True]
 ) -> list[str]: ...
 @validate_call
 def match_arg(
