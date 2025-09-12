@@ -10,16 +10,15 @@ from typing import Literal, overload
 
 from pydantic import validate_call
 
+
 @overload
 def match_arg(
     arg: str | list[str], choices: list[str], *, several_ok: Literal[False] = False
-) -> str:
-    ...
+) -> str: ...
 @overload
 def match_arg(
     arg: str | list[str], choices: list[str], *, several_ok: Literal[True]
-) -> list[str]:
-    ...
+) -> list[str]: ...
 @validate_call
 def match_arg(
     arg: str | list[str], choices: list[str], *, several_ok: bool = False
@@ -54,26 +53,28 @@ def match_arg(
     """
     return _match_arg(arg, choices, several_ok=several_ok)
 
+
 @singledispatch
 def _match_arg(
     arg: str | list[str], choices: list[str], *, several_ok: bool = False
-) -> str | list[str]:
-    ...
+) -> str | list[str]: ...
+
 
 @_match_arg.register(str)
 def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str | list[str]:
     """Internal implementation for string argument matching.
-    
+
     Args:
         arg: The argument string to be matched against choices.
         choices: List of valid choices to match against. Duplicates are removed.
         several_ok: If True, allows multiple matches and always returns list.
                    If False, requires unique match and returns single string.
+
     Returns:
         When several_ok=False: Single matched string.
         When several_ok=True: List containing matched string(s).
         For ambiguous matches with several_ok=True, returns all partial matches.
-        
+
     Raises:
         ValueError: If no match found, or if ambiguous match when several_ok=False.
     """
