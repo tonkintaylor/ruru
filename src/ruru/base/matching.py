@@ -6,7 +6,7 @@ Inspired by the R package `base` (https://stat.ethz.ch/R-manual/R-devel/library/
 
 from collections.abc import Iterable
 from functools import singledispatch
-from typing import overload
+from typing import Literal, overload
 
 from pydantic import validate_call
 
