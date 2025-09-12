@@ -11,9 +11,15 @@ from typing import overload
 from pydantic import validate_call
 
 @overload
-def match_arg(arg: str, choices: list[str], *, several_ok: bool = False) -> str: ...
+def match_arg(
+    arg: str | list[str], choices: list[str], *, several_ok: Literal[False] = False
+) -> str:
+    ...
 @overload
-def match_arg(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[str]: ...
+def match_arg(
+    arg: str | list[str], choices: list[str], *, several_ok: Literal[True]
+) -> list[str]:
+    ...
 @validate_call
 def match_arg(
     arg: str | list[str], choices: list[str], *, several_ok: bool = False
@@ -55,7 +61,7 @@ def _match_arg(
     ...
 
 @_match_arg.register(str)
-def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
+def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str | list[str]:
     """Internal implementation for string argument matching.
     
     Args:
@@ -109,7 +115,9 @@ def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str:
 
 
 @_match_arg.register(list)
-def _(arg: list[str], choices: list[str], *, several_ok: bool = False) -> list[str]:
+def _(
+    arg: list[str], choices: list[str], *, several_ok: bool = False
+) -> str | list[str]:
     """Internal implementation for list argument matching.
 
     Args:
