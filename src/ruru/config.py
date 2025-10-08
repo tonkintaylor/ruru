@@ -171,12 +171,23 @@ def _replace_item(item: list) -> list: ...
 def _replace_item(item: str | dict | list) -> str | dict | list:
     """Helper function to replace an individual item."""
     if isinstance(item, str) and "$" in item:
-        # Use the new _expand_env_vars function to handle all cases
-        # This handles both pure env vars and mixed strings uniformly
         return _expand_env_vars(item)
     if isinstance(item, dict | list):
         return replace_env_vars(item)
     return item
+
+
+def _replace_var(match: re.Match[str]) -> str:
+    """Replace a single environment variable match with its value.
+
+    Args:
+        match: Regular expression match object for an environment variable.
+
+    Returns:
+        The environment variable value, or empty string if not set.
+    """
+    var_name = match.group(1)
+    return os.getenv(var_name, "")
 
 
 def _expand_env_vars(value: str) -> str:
@@ -212,8 +223,4 @@ def _expand_env_vars(value: str) -> str:
         return os.getenv(var_name, default=value)
 
     # Handle mixed strings
-    def replace_var(match: re.Match[str]) -> str:
-        var_name = match.group(1)
-        return os.getenv(var_name, "")
-
-    return re.sub(pattern, replace_var, value)
+    return re.sub(pattern, _replace_var, value)
