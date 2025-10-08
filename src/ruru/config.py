@@ -203,17 +203,17 @@ def _expand_env_vars(value: str) -> str:
         >>> _expand_env_vars("$VAR1-$VAR2")
         'value1-value2'
     """
-    pattern = r'\$([A-Z_][A-Z0-9_]*)'
-    
+    pattern = r"\$([A-Z_][A-Z0-9_]*)"
+
     # Check if it's a pure env var for backward compatibility
     match = re.fullmatch(pattern, value)
     if match:
         var_name = match.group(1)
         return os.getenv(var_name, default=value)
-    
+
     # Handle mixed strings
-    def replace_var(match):
+    def replace_var(match: re.Match[str]) -> str:
         var_name = match.group(1)
         return os.getenv(var_name, "")
-    
+
     return re.sub(pattern, replace_var, value)
