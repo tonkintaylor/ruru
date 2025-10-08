@@ -96,3 +96,62 @@ class TestReplaceEnvVars:
         expected_output = ["replaced_value", "value2"]
         assert replace_env_vars(input_data) == expected_output
         del os.environ["TEST_VAR"]
+
+    @pytest.mark.parametrize(
+        ("input_value", "env_vars", "expected"),
+        [
+            ("https://$APP_NAME", {"APP_NAME": "myapp"}, "https://myapp"),
+            (
+                "$APP_NAME.azurecontainer.io",
+                {"APP_NAME": "myapp"},
+                "myapp.azurecontainer.io",
+            ),
+            ("$VAR1$VAR2", {"VAR1": "hello", "VAR2": "world"}, "helloworld"),
+            ("$VAR1-$VAR2", {"VAR1": "app", "VAR2": "env"}, "app-env"),
+            (
+                "https://$APP_NAME.$DOMAIN",
+                {"APP_NAME": "myapp", "DOMAIN": "eastus.azurecontainer.io"},
+                "https://myapp.eastus.azurecontainer.io",
+            ),
+            ("$SINGLE_VAR", {"SINGLE_VAR": "value"}, "value"),
+            ("https://$MISSING_VAR.com", {}, "https://.com"),
+            ("https://static.com", {}, "https://static.com"),
+        ],
+    )
+    def test_replace_env_vars_mixed_strings(self, input_value, env_vars, expected):
+        for key, value in env_vars.items():
+            os.environ[key] = value
+
+        try:
+            result = replace_env_vars({"key": input_value})
+            assert result["key"] == expected
+        finally:
+            for key in env_vars:
+                if key in os.environ:
+                    del os.environ[key]
+
+    def test_replace_env_vars_nested_mixed(self):
+        os.environ["API_HOST"] = "api"
+        os.environ["DOMAIN"] = "example.com"
+
+        input_data = {
+            "api_url": "https://$API_HOST.$DOMAIN/v1",
+            "nested": {"endpoint": "$API_HOST/endpoint"},
+            "list": ["$API_HOST", "https://$DOMAIN"],
+        }
+
+        expected = {
+            "api_url": "https://api.example.com/v1",
+            "nested": {"endpoint": "api/endpoint"},
+            "list": ["api", "https://example.com"],
+        }
+
+        result = replace_env_vars(input_data)
+        assert result == expected
+
+        del os.environ["API_HOST"]
+        del os.environ["DOMAIN"]
+
+    def test_replace_env_vars_backward_compatibility_missing_var(self):
+        result = replace_env_vars({"key": "$MISSING_VAR"})
+        assert result["key"] == "$MISSING_VAR"
