@@ -4,6 +4,7 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 """
 
 import os
+import re
 from pathlib import Path
 from typing import Any, overload
 
@@ -25,10 +26,11 @@ def get(
 
     This function reads a YAML file containing a 'default' field and merges it
     with the settings of the specified environment. It can also read a specific
-    value from the merged configuration settings. If the YAML file contains a
-    value that starts with '$', the function evaluates it as an environment
-    variable using os.getenv() and assigns the returned value to the key. It can
-    handle nested dictionaries and lists.
+    value from the merged configuration settings. Environment variables in the form
+    $VAR_NAME are replaced with their values. This supports both pure environment
+    variables ($VAR) and mixed strings with multiple variables
+    (e.g., https://$HOST.$DOMAIN). Missing environment variables are replaced with
+    empty strings. It can handle nested dictionaries and lists.
 
     Inspired by the R package `config` (https://rstudio.github.io/config/).
 
@@ -133,14 +135,24 @@ def replace_env_vars(data: dict) -> dict: ...
 @overload
 def replace_env_vars(data: list) -> list: ...
 def replace_env_vars(data: dict | list) -> dict | list:
-    """Replace values starting with '$' with corresponding environment variables.
+    """Replace environment variables in strings with their values.
+
+    This function handles both pure environment variables ($VAR) and mixed
+    strings containing one or more environment variables (e.g., https://$VAR1.$VAR2).
+    Environment variables not found are replaced with empty strings.
 
     Args:
         data: Dictionary or list containing configuration data.
 
     Returns:
-        Dictionary or list with values starting with '$' replaced by environment
-        variables.
+        Dictionary or list with environment variables replaced by their values.
+
+    Examples:
+        >>> os.environ["DB_HOST"] = "localhost"
+        >>> replace_env_vars({"url": "$DB_HOST"})
+        {'url': 'localhost'}
+        >>> replace_env_vars({"url": "https://$DB_HOST:5432"})
+        {'url': 'https://localhost:5432'}
     """
     if isinstance(data, dict):
         return {key: _replace_item(val) for key, val in data.items()}
@@ -158,9 +170,57 @@ def _replace_item(item: dict) -> dict: ...
 def _replace_item(item: list) -> list: ...
 def _replace_item(item: str | dict | list) -> str | dict | list:
     """Helper function to replace an individual item."""
-    if isinstance(item, str) and item.startswith("$"):
-        env_var = item[1:]
-        return os.getenv(env_var, default=item)
+    if isinstance(item, str) and "$" in item:
+        return _expand_env_vars(item)
     if isinstance(item, dict | list):
         return replace_env_vars(item)
     return item
+
+
+def _replace_var(match: re.Match[str]) -> str:
+    """Replace a single environment variable match with its value.
+
+    Args:
+        match: Regular expression match object for an environment variable.
+
+    Returns:
+        The environment variable value, or empty string if not set.
+    """
+    var_name = match.group(1)
+    return os.getenv(var_name, "")
+
+
+def _expand_env_vars(value: str) -> str:
+    """Expand environment variables in a string with mixed content.
+
+    Finds all $VAR_NAME patterns in the string and replaces them with their
+    corresponding environment variable values. If an environment variable is
+    not set, it is replaced with an empty string. For backward compatibility,
+    if the entire string is a single pure environment variable (e.g., "$VAR")
+    and it's not found, the original string is returned.
+
+    Args:
+        value: String that may contain one or more $VAR_NAME patterns.
+
+    Returns:
+        String with all $VAR_NAME patterns replaced by their environment
+        variable values or empty strings if not set.
+
+    Examples:
+        >>> os.environ["APP_NAME"] = "myapp"
+        >>> os.environ["DOMAIN"] = "example.com"
+        >>> _expand_env_vars("https://$APP_NAME.$DOMAIN")
+        'https://myapp.example.com'
+        >>> _expand_env_vars("$VAR1-$VAR2")
+        'value1-value2'
+    """
+    pattern = r"\$([A-Z_][A-Z0-9_]*)"
+
+    # Check if it's a pure env var for backward compatibility
+    match = re.fullmatch(pattern, value)
+    if match:
+        var_name = match.group(1)
+        return os.getenv(var_name, default=value)
+
+    # Handle mixed strings
+    return re.sub(pattern, _replace_var, value)
