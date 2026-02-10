@@ -16,6 +16,11 @@
 #   - PyPI trusted publishing configured (see README)
 #   - GitHub environment 'release' created
 #   - Initial version tag exists (e.g., v0.1.0)
+#   - Repository secret 'GH_PAT' configured with a Personal Access Token that has:
+#     * 'contents: write' permission to create tags and releases
+#     * Ability to bypass tag creation restrictions (if rulesets are enabled)
+#   - Repository rulesets (if any) must allow tag creation by the workflow actor
+#     or the PAT must have bypass permissions
 
 name: Release to PyPI
 permissions:
@@ -32,7 +37,7 @@ on:
   workflow_dispatch:
 jobs:
   deploy:
-    if: github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip release]')
+    if: (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip release]')) || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -43,7 +48,9 @@ jobs:
           uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           with:
             fetch-depth: 0
-            token: ${{ secrets.GITHUB_TOKEN }}
+            token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+            # GH_PAT is required if repository rulesets restrict tag creation.
+            # The PAT must have 'contents: write' and bypass tag protection rules.
 
         - name: Set up uv
           uses: astral-sh/setup-uv@3b9817b1bf26186f03ab8277bab9b827ea5cc254 # v3.2.0
@@ -89,7 +96,13 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git tag -a ${{ steps.next_version.outputs.next_version }} -m "Release ${{ steps.next_version.outputs.next_version }}"
-            git push origin ${{ steps.next_version.outputs.next_version }}
+            if ! git push origin ${{ steps.next_version.outputs.next_version }} 2>&1; then
+              echo "::error::Failed to push tag. This may be due to repository rulesets restricting tag creation."
+              echo "::error::Solution: Create a Personal Access Token (PAT) with contents:write permission"
+              echo "::error::and bypass privileges, then add it as a repository secret named GH_PAT."
+              echo "::error::See: https://github.com/${{ github.repository }}/settings/rules"
+              exit 1
+            fi
 
         - name: Create GitHub Release
           uses: softprops/action-gh-release@e7a8f85e1c67a31e6ed99a94b41bd0b71bbee6b8 # v2.2.0
