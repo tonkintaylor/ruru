@@ -10,7 +10,7 @@ from ruru import cli
 
 # Custom StringIO class with None encoding for testing
 class StdoutWithNoneEncoding(StringIO):
-    encoding = None
+    encoding = None  # type: ignore[assignment]
 
 
 @pytest.mark.parametrize(

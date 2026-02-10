@@ -8,7 +8,7 @@ from ruru import cli
 
 # Custom StringIO class with None encoding for testing
 class StdoutWithNoneEncoding(StringIO):
-    encoding = None
+    encoding = None  # type: ignore[assignment]
 
 
 @pytest.mark.parametrize("heading_func", [cli.h1, cli.h2, cli.h3])
