@@ -121,6 +121,10 @@ def _(
 ) -> str | list[str]:
     """Internal implementation for iterable argument matching.
 
+    Note: While str is technically an Iterable, singledispatch will dispatch
+    strings to the str handler (line 64) because it's more specific.
+    This handler only receives non-str iterables like list, tuple, set, etc.
+
     Args:
         arg: Iterable of argument strings to be matched against choices.
         choices: List of valid choices to match against. Duplicates are removed.

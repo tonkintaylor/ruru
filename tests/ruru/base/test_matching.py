@@ -241,3 +241,19 @@ class TestMatchArgIterableTypes:
         """Test empty tuple input returns empty list."""
         result = match_arg((), standard_choices, several_ok=True)
         assert result == []
+
+    def test_string_not_treated_as_iterable(self, standard_choices):
+        """Test that strings are handled as single values, not as iterables of characters.
+
+        This test verifies that singledispatch correctly prioritizes the str handler
+        over the Iterable handler, even though str is an Iterable. If strings were
+        treated as iterables, they would be processed character by character.
+        """
+        # String should match as a whole, not character by character
+        result = match_arg("app", standard_choices, several_ok=False)
+        assert result == "apple"
+        assert isinstance(result, str)
+
+        # With several_ok=True, should still return the matched string in a list
+        result = match_arg("ban", standard_choices, several_ok=True)
+        assert result == ["banana"]
