@@ -6,6 +6,11 @@ import pytest
 from ruru import cli
 
 
+# Custom StringIO class with None encoding for testing
+class StdoutWithNoneEncoding(StringIO):
+    encoding = None
+
+
 @pytest.mark.parametrize("heading_func", [cli.h1, cli.h2, cli.h3])
 def test_heading_functions_produce_output(capfd, heading_func):
     """Test heading functions produce output."""
