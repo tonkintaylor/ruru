@@ -61,6 +61,8 @@ jobs:
           uv python pin ${{ matrix.python-version }}
           uv export --no-managed-python --no-group doc --resolution ${{ matrix.resolution }} > ci-requirements.txt 
           uv pip install --system -r ci-requirements.txt
+        env:
+          UV_NO_SYMLINKS: 1
 
       - name: Run pre-commit
         if: matrix.pre-commit
