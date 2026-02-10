@@ -53,8 +53,12 @@ def _supports_color() -> bool:
     if "pytest" in sys.modules:
         return True
 
-    # Check if output is a TTY
-    if not hasattr(sys.stdout, "isatty") or not sys.stdout.isatty():
+    # Check if stdout is available and is a TTY
+    if (
+        sys.stdout is None
+        or not hasattr(sys.stdout, "isatty")
+        or not sys.stdout.isatty()
+    ):
         return False
 
     # Check TERM environment variable

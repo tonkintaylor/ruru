@@ -11,9 +11,12 @@ def _supports_unicode() -> bool:
     if os.getenv("ASCII_ONLY"):
         return False
 
-    # Check encoding
-    encoding = getattr(sys.stdout, "encoding", "").lower()
-    return encoding in ("utf-8", "utf8")
+    # Check encoding - handle None explicitly
+    encoding = getattr(sys.stdout, "encoding", None)
+    if encoding is None:
+        return False
+
+    return encoding.lower() in ("utf-8", "utf8")
 
 
 SymbolName = Literal[

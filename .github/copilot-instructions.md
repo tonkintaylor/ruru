@@ -21,6 +21,7 @@
 - Limit line length to 100 characters.
 - We are using uv to install packages.
 - Never create functions that return more than one output value.
+- Never use `argparse` unless explicitly instructed.
 - Never return tuples; use dictionaries for multiple return values.
 - Do not add exceptions to functions unless explicitly requested.
 - Prefer to type hint strictly with the likes of `Literal["a", "b"]` instead of hinting broader types like `str`. This means the constraints on the input arguments to a function can reside in the type annotation rather than the docstring. Consider @validate_call (from pydantic import validate_call) to avoid boilerplate case-checking in such cases.
@@ -52,8 +53,6 @@
 - When importing internal modules, do not include the "src" folder in the import path as it is already defined in pyproject.toml
 
 ## Linter
-
-- Run `pre-commit run ruff-format --all-files` before committing new code
 - For file-level linter suppressions, use `# ruff: noqa: RULE1, RULE2` format (not `# ruff noqa:`)
 - For line-level suppressions, use `# noqa: RULE1, RULE2` format
 - Use `pathlib.Path` for all filesystem operations instead of `os.path`. Path objects provide a more readable and maintainable object-oriented interface (e.g., `Path('dir') / 'file.txt'` instead of `os.path.join()`, `path.exists()` instead of `os.path.exists()`, etc.)
