@@ -158,7 +158,7 @@ class TestMatchArgListInput:
 
     def test_match_arg_list_input_several_ok_false(self, standard_choices):
         """Test list input with several_ok=False raises error."""
-        error_msg = "List input is only allowed when several_ok=True"
+        error_msg = "Iterable input is only allowed when several_ok=True"
         with pytest.raises(ValueError, match=error_msg):
             match_arg(["ban", "app"], standard_choices, several_ok=False)
 
@@ -170,7 +170,7 @@ class TestMatchArgListInput:
 
     def test_match_arg_list_with_no_match_element(self, standard_choices):
         """Test list with no-match element raises error with clear message."""
-        error_msg = "Error in list element 1 \\('xyz'\\).*not valid"
+        error_msg = "Error in iterable element 1 \\('xyz'\\).*not valid"
         with pytest.raises(ValueError, match=error_msg):
             match_arg(["ban", "xyz"], standard_choices, several_ok=True)
 
@@ -210,3 +210,34 @@ class TestMatchArgListInput:
         """Test various list input scenarios."""
         result = match_arg(query_list, standard_choices, several_ok=True)
         assert sorted(result) == sorted(expected)
+
+
+class TestMatchArgIterableTypes:
+    """Tests for different iterable types (tuple, set, generator)."""
+
+    def test_match_arg_tuple_input(self, standard_choices):
+        """Test tuple input works with several_ok=True."""
+        result = match_arg(("ban", "app"), standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple"])
+
+    def test_match_arg_set_input(self, standard_choices):
+        """Test set input works with several_ok=True."""
+        result = match_arg({"ban", "app"}, standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple"])
+
+    def test_match_arg_generator_input(self, standard_choices):
+        """Test generator input works with several_ok=True."""
+        generator = (x for x in ["ban", "app"])
+        result = match_arg(generator, standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple"])
+
+    def test_match_arg_tuple_input_several_ok_false(self, standard_choices):
+        """Test tuple input with several_ok=False raises error."""
+        error_msg = "Iterable input is only allowed when several_ok=True"
+        with pytest.raises(ValueError, match=error_msg):
+            match_arg(("ban", "app"), standard_choices, several_ok=False)
+
+    def test_match_arg_empty_tuple(self, standard_choices):
+        """Test empty tuple input returns empty list."""
+        result = match_arg((), standard_choices, several_ok=True)
+        assert result == []
