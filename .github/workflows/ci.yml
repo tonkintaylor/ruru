@@ -1,3 +1,15 @@
+# Continuous Integration Workflow
+#
+# Purpose:
+#   Runs comprehensive tests and code quality checks to ensure code integrity.
+#   Tests run across multiple OS platforms (Ubuntu, macOS, Windows) and Python versions (3.10-3.13).
+#   Includes pre-commit hooks, pytest with coverage, and SonarQube code analysis.
+#
+# Triggers:
+#   - Push to master branch (except docs/markdown changes)
+#   - Pull requests targeting master branch (except docs/markdown changes)
+#   - Manual workflow dispatch
+
 name: CI
 permissions:
   contents: read
@@ -5,13 +17,13 @@ permissions:
 on:
   workflow_dispatch:
   push:
-    branches: ['master', 'develop']
+    branches: ['master']
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
       - 'mkdocs.yml'
   pull_request:
-    branches: ['master', 'develop']
+    branches: ['master']
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
