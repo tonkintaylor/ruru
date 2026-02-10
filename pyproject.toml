@@ -81,7 +81,7 @@ source = "vcs"
 version-file = "src/ruru/_version.py"
 
 [tool.ruff]
-line-length = 88
+line-length = 100
 src = [ "src" ]
 include = [ "**/pyproject.toml", "*.ipynb", "*.py", "*.pyi" ]
 extend-exclude = [ "src/**/_version.py", "src/archive/**" ]

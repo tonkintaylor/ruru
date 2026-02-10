@@ -158,7 +158,7 @@ class TestMatchArgListInput:
 
     def test_match_arg_list_input_several_ok_false(self, standard_choices):
         """Test list input with several_ok=False raises error."""
-        error_msg = "List input is only allowed when several_ok=True"
+        error_msg = "Iterable input is only allowed when several_ok=True"
         with pytest.raises(ValueError, match=error_msg):
             match_arg(["ban", "app"], standard_choices, several_ok=False)
 
@@ -170,7 +170,7 @@ class TestMatchArgListInput:
 
     def test_match_arg_list_with_no_match_element(self, standard_choices):
         """Test list with no-match element raises error with clear message."""
-        error_msg = "Error in list element 1 \\('xyz'\\).*not valid"
+        error_msg = "Error in iterable element 1 \\('xyz'\\).*not valid"
         with pytest.raises(ValueError, match=error_msg):
             match_arg(["ban", "xyz"], standard_choices, several_ok=True)
 
@@ -204,9 +204,54 @@ class TestMatchArgListInput:
             (["app", "ban"], ["apple", "banana"]),  # Multiple partial matches
         ],
     )
-    def test_match_arg_list_various_scenarios(
-        self, standard_choices, query_list, expected
-    ):
+    def test_match_arg_list_various_scenarios(self, standard_choices, query_list, expected):
         """Test various list input scenarios."""
         result = match_arg(query_list, standard_choices, several_ok=True)
         assert sorted(result) == sorted(expected)
+
+
+class TestMatchArgIterableTypes:
+    """Tests for different iterable types (tuple, set, generator)."""
+
+    def test_match_arg_tuple_input(self, standard_choices):
+        """Test tuple input works with several_ok=True."""
+        result = match_arg(("ban", "app"), standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple"])
+
+    def test_match_arg_set_input(self, standard_choices):
+        """Test set input works with several_ok=True."""
+        result = match_arg({"ban", "app"}, standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple"])
+
+    def test_match_arg_generator_input(self, standard_choices):
+        """Test generator input works with several_ok=True."""
+        generator = (x for x in ["ban", "app"])
+        result = match_arg(generator, standard_choices, several_ok=True)
+        assert sorted(result) == sorted(["banana", "apple"])
+
+    def test_match_arg_tuple_input_several_ok_false(self, standard_choices):
+        """Test tuple input with several_ok=False raises error."""
+        error_msg = "Iterable input is only allowed when several_ok=True"
+        with pytest.raises(ValueError, match=error_msg):
+            match_arg(("ban", "app"), standard_choices, several_ok=False)
+
+    def test_match_arg_empty_tuple(self, standard_choices):
+        """Test empty tuple input returns empty list."""
+        result = match_arg((), standard_choices, several_ok=True)
+        assert result == []
+
+    def test_string_not_treated_as_iterable(self, standard_choices):
+        """Test that strings are handled as single values, not as iterables of characters.
+
+        This test verifies that singledispatch correctly prioritizes the str handler
+        over the Iterable handler, even though str is an Iterable. If strings were
+        treated as iterables, they would be processed character by character.
+        """
+        # String should match as a whole, not character by character
+        result = match_arg("app", standard_choices, several_ok=False)
+        assert result == "apple"
+        assert isinstance(result, str)
+
+        # With several_ok=True, should still return the matched string in a list
+        result = match_arg("ban", standard_choices, several_ok=True)
+        assert result == ["banana"]
