@@ -122,9 +122,7 @@ def find_config_file(file: str | Path, *, use_parent: bool) -> Path:
         if not use_parent:
             break
 
-        current_path = (
-            current_path.parent if current_path.parent != current_path else None
-        )
+        current_path = current_path.parent if current_path.parent != current_path else None
 
     msg = f"Configuration file '{file}' not found."
     raise FileNotFoundError(msg)

@@ -40,8 +40,7 @@ class TestGet:
             ),
             # Overwriting value with explicit config
             (
-                "default:\n  key1: value1\n  key2: value2\n"
-                "non-default:\n  key2: value3",
+                "default:\n  key1: value1\n  key2: value2\nnon-default:\n  key2: value3",
                 "key2",
                 "non-default",
                 None,
@@ -148,9 +147,7 @@ class TestReplaceEnvVars:
             ("https://static.com", {}, "https://static.com"),
         ],
     )
-    def test_replace_env_vars_mixed_strings(
-        self, input_value, env_vars, expected, monkeypatch
-    ):
+    def test_replace_env_vars_mixed_strings(self, input_value, env_vars, expected, monkeypatch):
         for key, value in env_vars.items():
             monkeypatch.setenv(key, value)
 
