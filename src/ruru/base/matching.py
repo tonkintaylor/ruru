@@ -103,8 +103,7 @@ def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str | list[s
             partial_matches = [choice for choice in choices if choice.startswith(arg)]
             matches_str = ", ".join(partial_matches)
             error_message = (
-                f"The argument '{arg}' matches multiple choices: {matches_str}. "
-                "Be more specific."
+                f"The argument '{arg}' matches multiple choices: {matches_str}. Be more specific."
             )
             raise ValueError(error_message)
     else:
@@ -116,9 +115,7 @@ def _(arg: str, choices: list[str], *, several_ok: bool = False) -> str | list[s
 
 
 @_match_arg.register(Iterable)
-def _(
-    arg: Iterable[str], choices: list[str], *, several_ok: bool = False
-) -> str | list[str]:
+def _(arg: Iterable[str], choices: list[str], *, several_ok: bool = False) -> str | list[str]:
     """Internal implementation for iterable argument matching.
 
     Note: While str is technically an Iterable, singledispatch will dispatch

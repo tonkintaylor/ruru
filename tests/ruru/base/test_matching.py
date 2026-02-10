@@ -204,9 +204,7 @@ class TestMatchArgListInput:
             (["app", "ban"], ["apple", "banana"]),  # Multiple partial matches
         ],
     )
-    def test_match_arg_list_various_scenarios(
-        self, standard_choices, query_list, expected
-    ):
+    def test_match_arg_list_various_scenarios(self, standard_choices, query_list, expected):
         """Test various list input scenarios."""
         result = match_arg(query_list, standard_choices, several_ok=True)
         assert sorted(result) == sorted(expected)
