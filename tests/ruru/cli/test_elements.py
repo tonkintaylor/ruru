@@ -72,11 +72,6 @@ def test_bullets_with_mixed_types(capfd):
 
 def test_bullets_with_none_stdout_encoding(monkeypatch):
     """Test bullets handles None stdout.encoding gracefully."""
-
-    # Create a custom StringIO class with None encoding
-    class StdoutWithNoneEncoding(StringIO):
-        encoding = None
-
     mock_stdout = StdoutWithNoneEncoding()
     monkeypatch.setattr(sys, "stdout", mock_stdout)
 
@@ -92,11 +87,6 @@ def test_bullets_with_none_stdout_encoding(monkeypatch):
 
 def test_bullets_with_dict_none_stdout_encoding(monkeypatch):
     """Test bullets handles None stdout.encoding with dict input."""
-
-    # Create a custom StringIO class with None encoding
-    class StdoutWithNoneEncoding(StringIO):
-        encoding = None
-
     mock_stdout = StdoutWithNoneEncoding()
     monkeypatch.setattr(sys, "stdout", mock_stdout)
 
