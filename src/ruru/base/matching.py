@@ -122,7 +122,7 @@ def _(
     """Internal implementation for iterable argument matching.
 
     Note: While str is technically an Iterable, singledispatch will dispatch
-    strings to the str handler (line 64) because it's more specific.
+    strings to the str handler (line 63) because it's more specific.
     This handler only receives non-str iterables like list, tuple, set, etc.
 
     Args:
@@ -149,9 +149,12 @@ def _(
         )
         raise ValueError(error_message)
 
+    # Convert iterable to list to handle one-time iterables like generators
+    arg_list = list(arg)
+
     # Process each element in the iterable
     all_matches = []
-    for i, single_arg in enumerate(arg):
+    for i, single_arg in enumerate(arg_list):
         try:
             # Recursively call match_arg for each element
             result = _match_arg(single_arg, choices, several_ok=True)
