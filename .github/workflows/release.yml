@@ -89,7 +89,9 @@ jobs:
             IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
             NEXT_PATCH=$((PATCH + 1))
             NEXT_VERSION="v${MAJOR}.${MINOR}.${NEXT_PATCH}"
+            NEXT_VERSION_CLEAN="${MAJOR}.${MINOR}.${NEXT_PATCH}"
             echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+            echo "next_version_clean=$NEXT_VERSION_CLEAN" >> $GITHUB_OUTPUT
             echo "Next version: $NEXT_VERSION"
 
         - name: Create and push tag
@@ -113,6 +115,8 @@ jobs:
             generate_release_notes: true
 
         - name: Build package
+          env:
+            SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.next_version.outputs.next_version_clean }}
           run: |
             uv build
 
