@@ -65,8 +65,9 @@ jobs:
         - name: Setup dependencies
           run: |
             uv python pin 3.13
-            uv export --no-managed-python --no-group doc --resolution highest > ci-requirements.txt 
-            uv pip install --system -r ci-requirements.txt
+            uv export --no-managed-python --no-group doc --resolution highest > /tmp/ci-requirements.txt
+            uv pip install --system -r /tmp/ci-requirements.txt
+            rm /tmp/ci-requirements.txt
 
         - name: Run tests
           run: |
