@@ -5,6 +5,7 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 
 import os
 import re
+from importlib.resources.abc import Traversable
 from pathlib import Path
 from typing import Any, overload
 
@@ -18,7 +19,7 @@ class MissingDefaultConfigError(Exception):
 def get(
     value: str | None = None,
     config: str | None = None,
-    file: str | Path = "config.yml",
+    file: str | Path | Traversable = "config.yml",
     *,
     use_parent: bool = True,
 ) -> Any:
@@ -46,9 +47,11 @@ def get(
         config: The environment or configuration name to load. If None,
             the environment is determined by the CONFIG_ACTIVE environment variable
             or defaults to "default".
-        file: Configuration file to read from (defaults to "config.yml"). If the file
-            isn't found at the location specified, then parent directories are
-            searched for a file of the same name.
+        file: Configuration file to read from (defaults to "config.yml"). Accepts
+            ``str``, ``Path``, or ``Traversable`` (e.g. from
+            ``importlib.resources.files``). If the file isn't found at the location
+            specified, then parent directories are searched for a file of the same
+            name. Parent directory search is skipped for ``Traversable`` objects.
         use_parent: True to scan parent directories for configuration files if the
             specified config file isn't found.
 
@@ -56,7 +59,10 @@ def get(
         The requested value or a dictionary containing the merged configuration
         settings.
     """
-    config_file = find_config_file(file, use_parent=use_parent)
+    if isinstance(file, (str, Path)):
+        config_file = find_config_file(file, use_parent=use_parent)
+    else:
+        config_file = file
 
     if config is None:
         config = os.getenv("CONFIG_ACTIVE", default="default")
