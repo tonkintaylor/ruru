@@ -12,9 +12,7 @@ from pydantic import validate_call
 
 
 @overload
-def match_arg(
-    arg: str | Iterable[str], choices: list[str], *, several_ok: Literal[False] = False
-) -> str: ...
+def match_arg(arg: str, choices: list[str], *, several_ok: Literal[False] = False) -> str: ...
 @overload
 def match_arg(
     arg: str | Iterable[str], choices: list[str], *, several_ok: Literal[True]
