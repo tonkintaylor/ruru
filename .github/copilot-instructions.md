@@ -2,7 +2,7 @@
 
 ## General Guidelines
 
-- We are using Windows for development and Linux for deployment/CI. When running commands in terminal, use Windows commands for local development (like ";" instead of "&&" to separate commands) and Linux commands when running in CI environments.
+- We are using Windows for development and Linux for deployment/CI. When running commands in terminal, use Windows commands for local development (like ";" instead of "&&" to separate commands) and Linux commands when running in CI environments. GitHub Actions workflow files (`.github/workflows/`) are CI and must use Linux/shell syntax (e.g. `mkdir -p`, `&&`, `cat`, `echo`).
 - Every time I ask you to fix linter errors and provide the error messages, update the Linter section in `.github/copilot-instructions.md` accordingly. Use concise, oneliner instruction. Ensure your future responses avoid repeating the same errors.
 - Never create notebooks (ipynb files) unless asked explicitly.
 
