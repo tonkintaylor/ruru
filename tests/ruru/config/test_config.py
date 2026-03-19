@@ -1,5 +1,9 @@
-from importlib.resources.abc import Traversable
 from pathlib import Path
+
+try:
+    from importlib.resources.abc import Traversable
+except ModuleNotFoundError:
+    from importlib.abc import Traversable  # type: ignore[attr-defined]
 
 import pytest
 

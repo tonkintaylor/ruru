@@ -5,9 +5,13 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 
 import os
 import re
-from importlib.resources.abc import Traversable
 from pathlib import Path
-from typing import Any, overload
+from typing import Any, assert_never, overload
+
+try:
+    from importlib.resources.abc import Traversable
+except ModuleNotFoundError:
+    from importlib.abc import Traversable  # type: ignore[attr-defined]
 
 import yaml
 
@@ -47,11 +51,9 @@ def get(
         config: The environment or configuration name to load. If None,
             the environment is determined by the CONFIG_ACTIVE environment variable
             or defaults to "default".
-        file: Configuration file to read from (defaults to "config.yml"). Accepts
-            ``str``, ``Path``, or ``Traversable`` (e.g. from
-            ``importlib.resources.files``). If the file isn't found at the location
-            specified, then parent directories are searched for a file of the same
-            name. Parent directory search is skipped for ``Traversable`` objects.
+        file: Configuration file to read from (defaults to "config.yml"). If the file
+            isn't found at the location specified, then parent directories are
+            searched for a file of the same name.
         use_parent: True to scan parent directories for configuration files if the
             specified config file isn't found.
 
@@ -61,8 +63,10 @@ def get(
     """
     if isinstance(file, (str, Path)):
         config_file = find_config_file(file, use_parent=use_parent)
-    else:
+    elif isinstance(file, Traversable):
         config_file = file
+    else:
+        assert_never(file)
 
     if config is None:
         config = os.getenv("CONFIG_ACTIVE", default="default")
