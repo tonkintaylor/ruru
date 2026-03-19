@@ -160,7 +160,7 @@ class TestMatchArgListInput:
         """Test list input with several_ok=False raises error."""
         error_msg = "Iterable input is only allowed when several_ok=True"
         with pytest.raises(ValueError, match=error_msg):
-            match_arg(["ban", "app"], standard_choices, several_ok=False)
+            match_arg(["ban", "app"], standard_choices, several_ok=False)  # type: ignore[call-overload]
 
     def test_match_arg_list_with_ambiguous_element(self, partial_match_choices):
         """Test list with ambiguous element returns all matches when several_ok=True."""
@@ -233,7 +233,7 @@ class TestMatchArgIterableTypes:
         """Test tuple input with several_ok=False raises error."""
         error_msg = "Iterable input is only allowed when several_ok=True"
         with pytest.raises(ValueError, match=error_msg):
-            match_arg(("ban", "app"), standard_choices, several_ok=False)
+            match_arg(("ban", "app"), standard_choices, several_ok=False)  # type: ignore[call-overload]
 
     def test_match_arg_empty_tuple(self, standard_choices):
         """Test empty tuple input returns empty list."""
