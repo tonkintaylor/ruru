@@ -5,13 +5,9 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 
 import os
 import re
+from importlib.abc import Traversable
 from pathlib import Path
 from typing import Any, assert_never, overload
-
-try:
-    from importlib.resources.abc import Traversable
-except ModuleNotFoundError:
-    from importlib.abc import Traversable  # type: ignore[attr-defined]
 
 import yaml
 
