@@ -1,9 +1,6 @@
+import re
+from importlib.resources import files
 from pathlib import Path
-
-try:
-    from importlib.resources.abc import Traversable
-except ModuleNotFoundError:
-    from importlib.abc import Traversable  # type: ignore[attr-defined]
 
 import pytest
 
@@ -13,36 +10,6 @@ from ruru.config import (
     get,
     replace_env_vars,
 )
-
-
-class _PathTraversable(Traversable):
-    """A Traversable wrapper around a Path for testing."""
-
-    def __init__(self, path: Path) -> None:
-        self._path = path
-
-    def open(self, mode: str = "r", *args, **kwargs):
-        return self._path.open(mode, *args, **kwargs)
-
-    @property
-    def name(self) -> str:
-        return self._path.name
-
-    def iterdir(self):
-        return self._path.iterdir()
-
-    def is_dir(self) -> bool:
-        return self._path.is_dir()
-
-    def is_file(self) -> bool:
-        return self._path.is_file()
-
-    def joinpath(self, *descendants) -> Traversable:
-        return _PathTraversable(self._path.joinpath(*descendants))
-
-    def __truediv__(self, child):
-        return _PathTraversable(self._path / child)
-
 
 CONFIG_FILE = "config.yml"
 
@@ -122,11 +89,13 @@ class TestGet:
         with pytest.raises(MissingDefaultConfigError):
             get(file=config_fixture_path)
 
-    def test_get_with_traversable(self, config_fixture_path: Path):
-        config_fixture_path.write_text("default:\n  key1: value1\n  key2: value2")
-        traversable = _PathTraversable(config_fixture_path)
-        result = get("key1", file=traversable)
-        assert result == "value1"
+    def test_get_with_traversable(self):
+        # Yes, this isn't a config file, but it is an easy way to get a Traversable
+        # object for testing purposes.
+        traversable = files("ruru").joinpath("__init__.py")
+
+        with pytest.raises(TypeError, match=re.escape("must contain a dictionary.")):
+            get("key1", file=traversable)  # N.B. accepted by pyright
 
 
 class TestFindConfigFile:
