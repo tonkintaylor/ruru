@@ -1,3 +1,5 @@
+import re
+from importlib.resources import files
 from pathlib import Path
 
 import pytest
@@ -86,6 +88,14 @@ class TestGet:
         """)
         with pytest.raises(MissingDefaultConfigError):
             get(file=config_fixture_path)
+
+    def test_get_with_traversable(self):
+        # Yes, this isn't a config file, but it is an easy way to get a Traversable
+        # object for testing purposes.
+        traversable = files("ruru").joinpath("__init__.py")
+
+        with pytest.raises(TypeError, match=re.escape("must contain a dictionary.")):
+            get("key1", file=traversable)  # N.B. accepted by pyright
 
 
 class TestFindConfigFile:

@@ -5,10 +5,16 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 
 import os
 import re
+import sys
 from pathlib import Path
 from typing import Any, overload
 
 import yaml
+
+if sys.version_info >= (3, 11):
+    from importlib.resources.abc import Traversable  # Python 3.11+
+else:
+    from importlib.abc import Traversable  # Python 3.10
 
 
 class MissingDefaultConfigError(Exception):
@@ -18,7 +24,7 @@ class MissingDefaultConfigError(Exception):
 def get(
     value: str | None = None,
     config: str | None = None,
-    file: str | Path = "config.yml",
+    file: str | Path | Traversable = "config.yml",
     *,
     use_parent: bool = True,
 ) -> Any:
@@ -97,7 +103,7 @@ def get(
     return merged_config.get(value)
 
 
-def find_config_file(file: str | Path, *, use_parent: bool) -> Path:
+def find_config_file(file: str | Path | Traversable, *, use_parent: bool) -> Path:
     """Find the specified configuration file in the current or parent directories.
 
     This function searches for the specified configuration file in the current
@@ -115,7 +121,7 @@ def find_config_file(file: str | Path, *, use_parent: bool) -> Path:
     current_path = Path().cwd()
 
     while current_path is not None:
-        config_file = current_path / file
+        config_file = current_path / str(file)
         if config_file.exists() and config_file.is_file():
             return config_file
 
