@@ -5,11 +5,17 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 
 import os
 import re
-from importlib.resources.abc import Traversable
 from pathlib import Path
 from typing import Any, assert_never, overload
 
 import yaml
+
+try:
+    # Python 3.10 has Traversable at importlib.abc
+    from importlib.abc import Traversable
+except ImportError:
+    # Later versions have importlib.resources.abc
+    from importlib.resources.abc import Traversable
 
 
 class MissingDefaultConfigError(Exception):
