@@ -6,7 +6,7 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 import os
 import re
 from pathlib import Path
-from typing import Any, assert_never, overload
+from typing import Any, overload
 
 import yaml
 
@@ -63,12 +63,7 @@ def get(
         The requested value or a dictionary containing the merged configuration
         settings.
     """
-    if isinstance(file, (str, Path)):
-        config_file = find_config_file(file, use_parent=use_parent)
-    elif isinstance(file, Traversable):
-        config_file = file
-    else:
-        assert_never(file)
+    config_file = find_config_file(file, use_parent=use_parent)
 
     if config is None:
         config = os.getenv("CONFIG_ACTIVE", default="default")
@@ -109,7 +104,7 @@ def get(
     return merged_config.get(value)
 
 
-def find_config_file(file: str | Path, *, use_parent: bool) -> Path:
+def find_config_file(file: str | Path | Traversable, *, use_parent: bool) -> Path:
     """Find the specified configuration file in the current or parent directories.
 
     This function searches for the specified configuration file in the current
@@ -127,7 +122,7 @@ def find_config_file(file: str | Path, *, use_parent: bool) -> Path:
     current_path = Path().cwd()
 
     while current_path is not None:
-        config_file = current_path / file
+        config_file = current_path / str(file)
         if config_file.exists() and config_file.is_file():
             return config_file
 
