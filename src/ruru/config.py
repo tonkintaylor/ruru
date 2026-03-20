@@ -11,11 +11,9 @@ from typing import Any, overload
 import yaml
 
 try:
-    # Python 3.10 has Traversable at importlib.abc
-    from importlib.abc import Traversable
+    from importlib.resources.abc import Traversable  # Python 3.11+
 except ImportError:
-    # Later versions have importlib.resources.abc
-    from importlib.resources.abc import Traversable
+    from importlib.abc import Traversable  # Python 3.10
 
 
 class MissingDefaultConfigError(Exception):
