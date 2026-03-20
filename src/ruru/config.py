@@ -5,14 +5,15 @@ Inspired by the R package `config` (https://rstudio.github.io/config/).
 
 import os
 import re
+import sys
 from pathlib import Path
 from typing import Any, overload
 
 import yaml
 
-try:
+if sys.version_info >= (3, 11):
     from importlib.resources.abc import Traversable  # Python 3.11+
-except ImportError:
+else:
     from importlib.abc import Traversable  # Python 3.10
 
 
