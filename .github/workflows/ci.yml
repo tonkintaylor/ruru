@@ -87,15 +87,27 @@ jobs:
 
     strategy:
       matrix:
-        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        os: ["ubuntu-latest"]
         python-version: ["3.10", "3.11", "3.12", "3.13"]
         resolution: ["highest"]
         pre-commit: [true]
         pytest: [true]
         include:
+          # Min-dependency run on Linux
           - os: "ubuntu-latest"
             python-version: "3.10"
             resolution: "lowest-direct"
+            pre-commit: false
+            pytest: true
+          # Cross-platform spot-checks on latest Python only (cost-reduced from full matrix)
+          - os: "windows-latest"
+            python-version: "3.13"
+            resolution: "highest"
+            pre-commit: false
+            pytest: true
+          - os: "macos-latest"
+            python-version: "3.13"
+            resolution: "highest"
             pre-commit: false
             pytest: true
 
@@ -136,3 +148,4 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+
