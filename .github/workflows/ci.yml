@@ -103,6 +103,7 @@ jobs:
   code-analysis:
     name: Analyse Code Quality
     runs-on: ubuntu-latest
+    environment: sonarqube
     needs: tests
     if: always() && needs.tests.result == 'success'
     
